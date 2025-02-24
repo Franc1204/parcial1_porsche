@@ -1,0 +1,256 @@
+@font-face {
+    font-family: 'Porsche';
+    src: url('/assets/fonts/Porsche_Next_Web_Lat-Gr-Cyr/WEB-WOFF-2/PorscheNextWebLatin/PorscheNextWLa-Regular.woff2') format('woff2');
+}
+
+body {
+    font-family: 'Porsche', sans-serif;
+}
+
+body,
+html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background: #000;
+}
+
+.hero-gt3 {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    background: url("/assets/911/hero.webp") center/cover no-repeat;
+    overflow: hidden;
+}
+
+.hero-gt3 .gt3-car {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 60%;
+    height: auto;
+    z-index: 2;
+}
+
+.hero-content {
+    position: absolute;
+    top: 25%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: #fff;
+    z-index: 3;
+}
+
+.hero-content h1 {
+    font-size: 3rem;
+    margin-bottom: 0.5rem;
+}
+
+.hero-content .price {
+    font-size: 1.3rem;
+    margin-bottom: 2rem;
+}
+
+.specs-container {
+    position: absolute;
+    bottom: 30%;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 3rem;
+    justify-content: center;
+    z-index: 3;
+    color: #fff;
+}
+
+.specs-container .spec-item h3 {
+    font-size: 1.4rem;
+    margin-bottom: 0.2rem;
+}
+
+.specs-container .spec-item p {
+    margin: 0;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.specs-container button {
+    align-self: center;
+}
+
+.video-section {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.bg-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
+}
+
+.video-darken {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: black;
+    opacity: 0;
+    z-index: 2;
+    transition: opacity 0.3s ease;
+}
+
+.video-text {
+    position: absolute;
+    bottom: 10%;
+    left: 5%;
+    color: #fff;
+    text-align: left;
+    z-index: 3;
+    transition: transform 0.3s ease;
+}
+
+.video-text h2 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.video-text p {
+    font-size: 1.2rem;
+}
+
+.image-section {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.bg-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
+}
+
+.image-darken {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: black;
+    opacity: 0;
+    z-index: 2;
+    transition: opacity 0.3s ease;
+}
+
+.image-text {
+    position: absolute;
+    bottom: 10%;
+    left: 5%;
+    color: #fff;
+    text-align: left;
+    z-index: 3;
+    transition: transform 0.3s ease;
+}
+
+.image-text h2 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.info-section {
+    background: #fff;
+    color: #000;
+    padding: 4rem 2rem;
+    text-align: center;
+}
+
+.info-section .info-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.info-section h2 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.info-section p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+}
+
+#header {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 999;
+}
+
+#header .navbar-custom {
+    height: 60px;
+    position: relative;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+#header .navbar-custom .navbar-brand {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#header .offcanvas-backdrop.show {
+    background-color: rgba(0, 0, 0, 0.5) !important;
+    backdrop-filter: blur(70px);
+}
+
+#header .offcanvas-custom {
+    background: #fff;
+    backdrop-filter: blur(15px);
+}
+
+#header .offcanvas {
+    top: 0 !important;
+}
+
+#header .menu-options li {
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+}
+
+#header.sticky {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background: #000 !important;
+    transition: background 0.3s ease;
+    z-index: 9999;
+}
+
+#header.sticky .navbar-custom .navbar-brand img {
+    height: 60px;
+}
+
+#header .offcanvas-body a {
+    color: #333;
+    font-weight: bold;
+    text-decoration: none;
+}

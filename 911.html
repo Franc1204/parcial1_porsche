@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>911 GT3 RS</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="shortcut icon" href="assets/Porsche-logo.png" type="image/x-icon" />
+    <link rel="stylesheet" href="css/911.css" />
+  </head>
+  <body>
+    <header id="header">
+      <nav class="navbar navbar-dark navbar-custom">
+        <div class="container-fluid">
+          <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasMenu" aria-controls="offcanvasMenu" aria-label="Toggle menu">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <a class="navbar-brand" href="#">
+            <img src="assets/logo_blanco.png" alt="Porsche Logo" height="300" style="object-fit: contain;" />
+          </a>
+        </div>
+      </nav>
+      <div class="offcanvas offcanvas-start offcanvas-custom" tabindex="-1" id="offcanvasMenu" aria-labelledby="offcanvasMenuLabel">
+        <div class="offcanvas-header border-bottom border-white">
+          <button type="button" class="btn-close btn-close-white text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+          <ul class="list-unstyled menu-options">
+            <li><a href="index.html" class="text-decoration-none">Inicio</a></li>
+            <li><a href="myporsche.html" class="text-decoration-none">My Porsche</a></li>
+            <li><a href="contact.html" class="text-decoration-none">Contacto</a></li>
+          </ul>
+        </div>
+      </div>
+    </header>
+
+    <div class="hero-gt3">
+      <img src="assets/911/herocar.webp" alt="911 GT3 RS" class="gt3-car" />
+      <div class="hero-content">
+        <h1>911 GT3 RS</h1>
+        <div class="price">MXN 4,708,000.00</div>
+      </div>
+      <div class="specs-container">
+        <div class="spec-item">
+          <h3>525 HP</h3>
+          <p>Potencia (PS)</p>
+        </div>
+        <div class="spec-item">
+          <h3>3.2 s</h3>
+          <p>Aceleración 0 - 100 km/h</p>
+        </div>
+        <div class="spec-item">
+          <h3>296 km/h</h3>
+          <p>Velocidad máxima</p>
+        </div>
+        <button class="btn btn-light btn-lg">Comprar</button>
+      </div>
+    </div>
+
+    <section class="video-section">
+      <video class="bg-video" src="assets/911/video1.mp4" autoplay muted loop playsinline></video>
+      <div class="video-darken"></div>
+      <div class="video-text">
+        <h2>La perfección nunca es el principio</h2>
+      </div>
+    </section>
+
+    <section class="video-section">
+      <video class="bg-video" src="assets/911/video2.mp4" autoplay muted loop playsinline></video>
+      <div class="video-darken"></div>
+      <div class="video-text">
+        <h2>Pero siempre es el objetivo.</h2>
+      </div>
+    </section>
+
+    <section class="info-section">
+      <div class="info-content">
+        <h2>El 911 GT3 RS. Aún mas deportivo.</h2>
+        <p>
+          Los atletas lo saben: el máximo rendimiento requiere algo más que condiciones perfectas y suerte. El factor decisivo es la voluntad incondicional de volverse más rápido y más fuerte con cada sesión de entrenamiento. Cuestionarse todo, especialmente a sí mismo. Y aprender el máximo de cada error. Porque el mayor desafío es permanecer imbatible. Solo con este enfoque, Porsche es capaz de seguir ampliando los límites de lo factible. Para un aumento adicional del rendimiento en el circuito, gracias a un agarre radical y la amplia construcción ligera. Experimente el nuevo 911 GT3 RS en su máximo rendimiento.
+        </p>
+      </div>
+    </section>
+
+    <section class="image-section">
+      <img class="bg-image" src="assets/911/imagen4.webp" alt="Imagen optimizada para el circuito" />
+      <div class="image-darken"></div>
+      <div class="image-text">
+        <h2>
+          Optimizado para el circuito: el motor atmosférico de alto régimen de 4,0 l con 525 HP.
+        </h2>
+      </div>
+    </section>
+
+    <section class="video-section">
+      <video class="bg-video" src="assets/911/video5.mp4" autoplay muted loop playsinline></video>
+      <div class="video-darken"></div>
+      <div class="video-text">
+        <h2>Ajuste completamente automático del difusor delantero y el alerón trasero para una mayor velocidad en las curvas.</h2>
+      </div>
+    </section>
+
+    <section class="video-section">
+      <video class="bg-video" src="assets/911/video6.mp4" autoplay muted loop playsinline></video>
+      <div class="video-darken"></div>
+      <div class="video-text">
+        <h2>Drag Reduction System (DRS) para menor resistencia aerodinámica en las rectas.</h2>
+      </div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      window.addEventListener("scroll", function () {
+        document.querySelectorAll(".video-section, .image-section").forEach(function (section) {
+          var rect = section.getBoundingClientRect();
+          var progress = Math.min(Math.max(0, (window.innerHeight - rect.top) / window.innerHeight), 1);
+          var overlay = section.querySelector(".video-darken") || section.querySelector(".image-darken");
+          if (overlay) {
+            overlay.style.opacity = progress * 0.5;
+          }
+          var text = section.querySelector(".video-text") || section.querySelector(".image-text");
+          if (text) {
+            text.style.transform = "translate(0, " + -progress * 50 + "px)";
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

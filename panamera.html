@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Porsche Panamera</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="icon" type="image/x-icon" href="/assets/Porsche-logo.png">
+  <link rel="stylesheet" href="/css/panamera.css" />
+</head>
+<body class="bg-light">
+  <header id="header">
+      <nav class="navbar navbar-dark navbar-custom">
+        <div class="container-fluid">
+          <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasMenu" aria-controls="offcanvasMenu" aria-label="Toggle menu">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <a class="navbar-brand" href="#">
+            <img src="assets/logo_blanco.png" alt="Porsche Logo" height="300" style="object-fit: contain;">
+          </a>
+        </div>
+      </nav>
+      <div class="offcanvas offcanvas-start offcanvas-custom" tabindex="-1" id="offcanvasMenu" aria-labelledby="offcanvasMenuLabel">
+        <div class="offcanvas-header border-bottom border-white">
+          <button type="button" class="btn-close btn-close-white text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+          <ul class="list-unstyled menu-options">
+            <li><a href="index.html" class="text-decoration-none">Inicio</a></li>
+            <li><a href="myporsche.html" class="text-decoration-none">My Porsche</a></li>
+            <li><a href="contact.html" class="text-decoration-none">Contacto</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="offcanvas offcanvas-end offcanvas-custom" tabindex="-1" id="offcanvasDetails" aria-labelledby="offcanvasDetailsLabel">
+        <div class="offcanvas-header border-bottom border-white">
+          <h5 class="offcanvas-title" id="offcanvasDetailsLabel">Detalles Técnicos</h5>
+          <button type="button" class="btn-close btn-close-white text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+          <h6>Especificaciones Técnicas:</h6>
+          <ul>
+            <li><strong>Aceleración:</strong> 0 - 100 km/h en 4.1 s (con paquete Sport Chrono)</li>
+            <li><strong>Potencia combinada:</strong> 346 kW / 350 HP</li>
+            <li><strong>Velocidad máxima:</strong> 280 km/h</li>
+            <li><strong>Motor:</strong> 4 cilindros bóxer turbo</li>
+            <li><strong>Transmisión:</strong> PDK de 7 velocidades</li>
+          </ul>
+          <p>El Porsche Panamera 4 E-Hybrid combina un diseño icónico con tecnología de punta, ofreciendo un rendimiento excepcional y una eficiencia energética sobresaliente.</p>
+          <p>Su innovador sistema híbrido integra la potencia de un motor de combustión con la eficiencia de un motor eléctrico, proporcionando una experiencia de conducción dinámica y respetuosa con el medio ambiente.</p>
+          <p>Cada detalle ha sido cuidadosamente diseñado para fusionar deportividad y lujo en cada trayecto, haciendo del Panamera una opción inigualable para quienes buscan excelencia en rendimiento y confort.</p>
+        </div>
+      </div>
+  </header>
+  <div class="container d-flex flex-column align-items-center">
+    <div class="video-container">
+      <video src="/assets/panamera/panamera1.mp4" autoplay muted loop playsinline class="w-100"></video>
+      <img src="assets/panamera/panamera.png" alt="Panamera Hero" class="overlay-img">
+      <img src="assets/panamera/panamera1.avif" alt="Porsche Panamera" class="overlay-font">
+    </div>
+    <div class="text-container text-center">
+      <div class="mt-4">
+        <h1 class="fw-bold">Panamera 4 E-Hybrid</h1>
+        <p class="text-uppercase text-muted">Híbrido</p>
+        <p class="h3 text-dark">MXN 2,548,000.00</p>
+        <button class="btn btn-dark btn-lg mt-3">Comprar</button>
+      </div>
+      <div class="row mt-4 align-items-center">
+        <div class="col-md-6 text-start">
+          <h1 class="fw-bold">4.1 s</h1>
+          <p class="text text-muted">Aceleración de 0 - 100 km/h con paquete Sport Chrono</p>
+          <h1 class="fw-bold">346 kW / 350 HP</h1>
+          <p class="text text-muted">Potencia combinada (kW) / Potencia combinada (HP)</p>
+          <h1 class="fw-bold">280 km/h</h1>
+          <p class="text text-muted">Velocidad máxima</p>
+          <button class="btn btn-dark btn-lg mt-3" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDetails" aria-controls="offcanvasDetails">Todos los detalles técnicos</button>
+        </div>
+        <div class="col-md-6">
+          <img src="assets/panamera/panamera2.avif" alt="Panemera lateral" class="img-fluid">
+        </div>
+      </div>
+      <div class="mt-4">
+        <img src="assets/panamera/panamera.6dae809.svg" alt="Porsche Panamera" class="img-fluid small-img">
+      </div>
+      <div class="mt-4">
+        <img src="assets/panamera/panamera.avif" alt="Porsche Panamera" class="img-fluid">
+      </div>
+      <div class="mt-4 black-box position-relative">
+        <div class="black-box-content text-light text-start">
+          <h2 class="fw-bold display-4">Mayor propulsión. Para grandes objetivos</h2>
+          <p class="mt-3">El Panamera 4 E-Hybrid convierte los viajes en eventos deportivos y los negocios en puro placer. Con una impresionante potencia del sistema, la cual es posible gracias a la perfecta interacción entre el motor de combustión y el motor eléctrico.</p>
+        </div>
+        <video src="assets/panamera/panamera6.mp4" autoplay muted loop class="overlap-img-behind"></video>
+        <img src="/assets/panamera/pana4.avif" alt="" class="overlap-img">
+      </div>
+    </div>
+  </div>
+  <div class="container mt-5">
+    <div class="row justify-content-center">
+      <div class="col-md-8 text-center">
+        <img src="assets/panamera/panamera7.avif" alt="Conductor y Porsche Panamera" class="img-fluid lower-image">
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid my-5 px-0">
+    <h2 class="fw-bold mb-4 text-center">Aspectos destacados del Panamera.</h2>
+    <div id="destacadosCarousel" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <div class="row g-0">
+            <div class="col-md-6">
+              <div class="card h-100 border-0">
+                <img src="assets/panamera/carrusel1.avif" class="card-img-top" alt="Diseño deportivo">
+                <div class="card-body">
+                  <h5 class="card-title fw-bold">Suspensión neumática adaptativa con PASM</h5>
+                  <p class="card-text">Los modelos Panamera cuentan con suspensión neumática adaptativa con Porsche Active Suspension Management (PASM) para un manejo excepcional y personalizado.</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="card h-100 border-0">
+                <img src="assets/panamera/carrusel2.avif" class="card-img-top" alt="E-Hybrid">
+                <div class="card-body">
+                  <h5 class="card-title fw-bold">Tecnología E-Hybrid</h5>
+                  <p class="card-text">Un motor eléctrico de 140 kW y de última generación en baterías garantizan un rendimiento superior y mayor autonomía eléctrica.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <div class="row g-0">
+            <div class="col-md-6">
+              <div class="card h-100 border-0">
+                <img src="assets/panamera/carrusel3.avif" class="card-img-top" alt="Faros Matrix LED">
+                <div class="card-body">
+                  <h5 class="card-title fw-bold">Faros Matrix LED</h5>
+                  <p class="card-text">Equipados de serie con tecnología Matrix LED, ofrecen iluminación óptima y seguridad en carretera.</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="card h-100 border-0">
+                <img src="assets/panamera/carrusel4.avif" class="card-img-top" alt="Porsche Driver Experience">
+                <div class="card-body">
+                  <h5 class="card-title fw-bold">Porsche Driver Experience</h5>
+                  <p class="card-text">Un concepto de manejo que integra tecnología y confort, ofreciendo al conductor una experiencia única y personalizada.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#destacadosCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Anterior</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#destacadosCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Siguiente</span>
+      </button>
+    </div>
+  </div>
+  <script src="/components/custom-video-player.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

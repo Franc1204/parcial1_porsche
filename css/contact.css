@@ -1,0 +1,53 @@
+
+@font-face {
+    font-family: 'Porsche';
+    src: url('/assets/fonts/Porsche_Next_Web_Lat-Gr-Cyr/WEB-WOFF-2/PorscheNextWebLatin/PorscheNextWLa-Regular.woff2') format('woff2');
+  }
+  
+
+body {
+    font-family: 'Porsche', sans-serif;
+    background: url('/assets/background.avif') no-repeat center center fixed;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+  }
+  .contact-form {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    width: 300px;
+  }
+  .contact-form h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 1.5em;
+  }
+  .contact-form input,
+  .contact-form textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 10%;
+    box-sizing: border-box;
+    font-size: 1em;
+  }
+  .contact-form button {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    background: #ED1C24;
+    color: #fff;
+    font-size: 1em;
+    cursor: pointer;
+    border-radius: 10%;
+    transition: background 0.3s ease;
+  }
+  .contact-form button:hover {
+    background: #c10d10;
+  }
