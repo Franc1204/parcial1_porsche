@@ -6,6 +6,7 @@
   <title>Porsche Panamera</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="icon" type="image/x-icon" href="/assets/Porsche-logo.png">
+  <link rel="stylesheet" href="/css/styles.css" />
   <link rel="stylesheet" href="/css/panamera.css" />
 </head>
 <body class="bg-light">
@@ -161,7 +162,76 @@
       </button>
     </div>
   </div>
-  <script src="/components/custom-video-player.js"></script>
+
+  <div id="pasarelaCompraContainer"></div>
+  
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.32/dist/sweetalert2.min.js"></script>
+  <script src="/components/custom-video-player.js"></script>
+  <script src="/components/utils.js"></script>
+  <script src="/components/compra.js"></script>
+  <script src="/components/auth.js"></script>
+  <script>
+    // Configuración del modelo
+    const MODELO_PANAMERA = {
+      id: "panamera",
+      nombre: "Panamera 4 E-Hybrid",
+      precio: 2548000
+    };
+    
+    // Cargar el componente de pasarela de compra
+    document.addEventListener('DOMContentLoaded', function() {
+      fetch('/components/pasarela-compra.html')
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(`Error al cargar pasarela: ${response.status}`);
+          }
+          return response.text();
+        })
+        .then(html => {
+          document.getElementById('pasarelaCompraContainer').innerHTML = html;
+          console.log('Pasarela de compra cargada correctamente');
+          
+          configurarBotonCompra();
+        })
+        .catch(error => {
+          console.error('Error al cargar pasarela de compra:', error);
+          alert('Error al cargar la pasarela de compra. Por favor, recargue la página.');
+        });
+    });
+
+    function configurarBotonCompra() {
+      const btnComprar = document.querySelector('.text-container .btn-dark.btn-lg');
+      if (!btnComprar) {
+        console.error('No se encontró el botón de compra');
+        return;
+      }
+      
+      btnComprar.addEventListener('click', function() {
+        console.log('Botón de compra clickeado');
+        if (!verificarAutenticacion()) {
+          const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+          localStorage.setItem('redirect_after_login', currentPage);
+          
+          if (window.Swal) {
+            Swal.fire({
+              title: 'Iniciar sesión',
+              text: 'Debe iniciar sesión para realizar la compra',
+              icon: 'info',
+              confirmButtonText: 'Ir a iniciar sesión'
+            }).then(() => {
+              window.location.href = '/myporsche.html';
+            });
+          } else {
+            alert('Debe iniciar sesión para continuar');
+            window.location.href = '/myporsche.html';
+          }
+          return;
+        }
+        
+        iniciarProcesoCompra(MODELO_PANAMERA.id, MODELO_PANAMERA.nombre, MODELO_PANAMERA.precio);
+      });
+    }
+  </script>
 </body>
 </html>

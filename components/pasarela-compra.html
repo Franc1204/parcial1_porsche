@@ -1,0 +1,111 @@
+<!-- Modal de Pasarela de Compra -->
+<div class="modal fade" id="pasarelaCompraModal" tabindex="-1" aria-labelledby="pasarelaCompraLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header bg-dark text-white">
+        <h5 class="modal-title" id="pasarelaCompraLabel">Finalizar compra</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row mb-4">
+          <div class="col-md-6">
+            <h4>Resumen del pedido</h4>
+            <div class="card mb-3">
+              <div class="card-body">
+                <h5 class="card-title" id="modeloCompra">Porsche Model</h5>
+                <p class="card-text">Precio: <span id="precioCompra">$0.00</span></p>
+                <p class="card-text">Stock disponible: <span id="cantidadDisponible">0</span> unidades</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <h4>Método de pago</h4>
+            <div class="form-group mb-3">
+              <label for="tarjetaSelect" class="form-label">Seleccionar tarjeta</label>
+              <select class="form-select" id="tarjetaSelect">
+                <option value="nueva">Agregar nueva tarjeta</option>
+              </select>
+            </div>
+
+            <!-- Formulario para nueva tarjeta -->
+            <div id="nuevaTarjetaForm">
+              <div class="form-group mb-3">
+                <label for="numeroTarjeta" class="form-label">Número de tarjeta</label>
+                <input type="text" class="form-control" id="numeroTarjeta" placeholder="0000 0000 0000 0000">
+              </div>
+              <div class="form-group mb-3">
+                <label for="nombreTarjeta" class="form-label">Nombre en la tarjeta</label>
+                <input type="text" class="form-control" id="nombreTarjeta" placeholder="NOMBRE APELLIDO">
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group mb-3">
+                    <label for="vencimiento" class="form-label">Fecha de vencimiento</label>
+                    <input type="text" class="form-control" id="vencimiento" placeholder="MM/AA">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group mb-3">
+                    <label for="cvv" class="form-label">CVV</label>
+                    <input type="text" class="form-control" id="cvv" placeholder="123">
+                  </div>
+                </div>
+              </div>
+              <div class="form-check mb-3">
+                <input class="form-check-input" type="checkbox" id="guardarTarjeta">
+                <label class="form-check-label" for="guardarTarjeta">
+                  Guardar esta tarjeta para futuras compras
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-12">
+            <h4>Dirección de envío</h4>
+            <div class="form-group mb-3">
+              <label for="direccionCompra" class="form-label">Dirección</label>
+              <input type="text" class="form-control" id="direccionCompra" placeholder="Calle y número">
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group mb-3">
+                  <label for="ciudadCompra" class="form-label">Ciudad</label>
+                  <input type="text" class="form-control" id="ciudadCompra" placeholder="Ciudad">
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group mb-3">
+                  <label for="estadoCompra" class="form-label">Estado/Provincia</label>
+                  <input type="text" class="form-control" id="estadoCompra" placeholder="Estado">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group mb-3">
+                  <label for="codigoPostalCompra" class="form-label">Código postal</label>
+                  <input type="text" class="form-control" id="codigoPostalCompra" placeholder="00000">
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group mb-3">
+                  <label for="paisCompra" class="form-label">País</label>
+                  <input type="text" class="form-control" id="paisCompra" placeholder="País">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary" id="botonComprar" onclick="procesarCompra()">
+          <span class="spinner-border spinner-border-sm d-none" id="spinnerCompra" role="status" aria-hidden="true"></span>
+          Completar compra
+        </button>
+      </div>
+    </div>
+  </div>
+</div> 

@@ -1,0 +1,53 @@
+body {
+  background: #f6f7f9;
+}
+.perfil-container {
+  max-width: 900px;
+  margin: 40px auto;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.07);
+  padding: 2.5rem 2rem;
+}
+.perfil-tabs {
+  border-bottom: 1px solid #e5e5e5;
+  margin-bottom: 2rem;
+}
+.perfil-tabs .nav-link {
+  color: #222;
+  font-weight: 500;
+  border: none;
+  border-bottom: 2px solid transparent;
+  border-radius: 0;
+  margin-right: 2rem;
+}
+.perfil-tabs .nav-link.active {
+  border-bottom: 2.5px solid #000;
+  color: #000;
+  background: none;
+}
+.perfil-title {
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+}
+.perfil-section-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+.perfil-label {
+  font-weight: 500;
+  color: #555;
+}
+.perfil-value {
+  font-weight: 400;
+  color: #222;
+}
+.perfil-card {
+  background: #f6f7f9;
+  border-radius: 12px;
+  padding: 1.5rem 1rem;
+  margin-bottom: 1.5rem;
+} 

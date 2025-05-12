@@ -1,0 +1,1497 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Perfil de Usuario - Porsche</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/perfil.css">
+  <style>
+    .editable-container {
+      display: flex;
+      align-items: center;
+    }
+    .edit-icon {
+      cursor: pointer;
+      margin-left: 10px;
+      color: #777;
+      transition: color 0.2s;
+    }
+    .edit-icon:hover {
+      color: #000;
+    }
+    .edit-form {
+      display: none;
+      margin-top: 10px;
+    }
+    .form-floating {
+      margin-bottom: 10px;
+    }
+    .navbar-custom {
+      background-color: transparent !important;
+      padding: 15px 20px !important;
+      position: relative;
+      box-shadow: none;
+      height: 60px !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: flex-start !important;
+    }
+    .navbar-brand {
+      display: none !important; 
+    }
+    .navbar-toggler {
+      border: none !important;
+      padding: 8px !important;
+      z-index: 10;
+      color: #000 !important;
+      font-size: 1.5rem !important;
+    }
+    .navbar-toggler-icon {
+      filter: none !important; 
+    }
+    .navbar-toggler:hover {
+      color: #333 !important;
+    }
+    .offcanvas {
+      width: 270px;
+    }
+    .menu-options li {
+      margin: 15px 0;
+    }
+    .menu-options a {
+      color: #000;
+      text-decoration: none;
+      font-size: 16px;
+      transition: color 0.3s;
+    }
+    .menu-options a:hover, .menu-options a.active {
+      color: #1768e4;
+    }
+    .menu-options .user-name {
+      font-weight: normal;
+      color: #666;
+      font-size: 14px;
+      margin-top: 3px;
+      padding-left: 3px;
+    }
+    .menu-divider {
+      border-top: 1px solid #eee;
+      margin: 15px 0;
+      padding: 0 !important;
+      height: 1px;
+    }
+    .btn-cerrar-sesion {
+      color: #1768e4;
+    }
+    .offcanvas-custom .menu-options li a {
+      font-size: 1.4rem !important;
+      font-weight: 400;
+      padding: 12px 0;
+      display: block;
+      letter-spacing: 0.5px;
+    }
+    .offcanvas-custom .menu-options li {
+      margin: 8px 0;
+      padding: 5px 0;
+    }
+    .offcanvas-custom .offcanvas-body {
+      padding-top: 1.5rem;
+    }
+    .offcanvas-custom .offcanvas-header {
+      padding: 20px;
+    }
+    .offcanvas-custom {
+      background-color: #000;
+      color: white;
+    }
+    .offcanvas-custom .offcanvas-body .menu-options a {
+      color: white;
+    }
+    .compras-container {
+      width: 100%;
+    }
+    .compras-listado {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    .compra-card {
+      border: 1px solid #eee;
+      border-radius: 8px;
+      padding: 1rem;
+      transition: all 0.3s ease;
+    }
+    .compra-card:hover {
+      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+    }
+    .compra-devuelta {
+      background-color: #f9f9f9;
+      border-left: 4px solid #dc3545;
+    }
+    .compra-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 0.75rem;
+      margin-bottom: 0.75rem;
+    }
+    .compra-estado {
+      display: inline-block;
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+    .estado-completado {
+      background-color: #d4edda;
+      color: #0f5132;
+    }
+    .estado-devuelto {
+      background-color: #f8d7da;
+      color: #842029;
+    }
+    .compra-body {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .compra-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .compra-item-img {
+      width: 80px;
+      height: 60px;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #f8f9fa;
+      border-radius: 4px;
+    }
+    .compra-item-img img {
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+    }
+    .compra-item-details {
+      flex: 1;
+    }
+    .compra-item-details h5 {
+      margin-bottom: 0.25rem;
+      font-size: 1rem;
+    }
+    .compra-item-details .price {
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+    }
+    .compra-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 0.75rem;
+      padding-top: 0.75rem;
+      border-top: 1px solid #eee;
+    }
+    .empty-compras {
+      padding: 2rem;
+      text-align: center;
+    }
+    .empty-compras img {
+      opacity: 0.5;
+      margin-bottom: 1rem;
+    }
+    .perfil-container {
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body>
+  <header id="header">
+    <nav class="navbar navbar-custom">
+      <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasMenu" aria-controls="offcanvasMenu" aria-label="Toggle menu">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      </div>
+    </nav>
+    <div class="offcanvas offcanvas-start offcanvas-custom" tabindex="-1" id="offcanvasMenu" aria-labelledby="offcanvasMenuLabel">
+      <div class="offcanvas-header border-bottom border-white">
+        <div class="offcanvas-title" id="offcanvasMenuLabel">
+        </div>
+        <button type="button" class="btn-close btn-close-white text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
+      <div class="offcanvas-body">
+        <ul class="list-unstyled menu-options">
+          <li><a href="index.html" class="text-decoration-none">Inicio</a></li>
+          <li><a href="myporsche.html" class="text-decoration-none">My Porsche</a></li>
+          <li><a href="contact.html" class="text-decoration-none">Contacto</a></li>
+        </ul>
+      </div>
+    </div>
+  </header>
+  <div class="perfil-container">
+    <div class="perfil-title">Ajustes del perfil</div>
+    <ul class="nav perfil-tabs" id="perfilTabs" role="tablist">
+      <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="datos-tab" data-bs-toggle="tab" data-bs-target="#datos" type="button" role="tab" aria-controls="datos" aria-selected="true">Datos personales</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="pago-tab" data-bs-toggle="tab" data-bs-target="#pago" type="button" role="tab" aria-controls="pago" aria-selected="false">Medios de pago</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="compras-tab" data-bs-toggle="tab" data-bs-target="#compras" type="button" role="tab" aria-controls="compras" aria-selected="false">Mis compras</button>
+      </li>
+    </ul>
+    <div class="tab-content" id="perfilTabsContent">
+      <!-- Datos personales -->
+      <div class="tab-pane fade show active" id="datos" role="tabpanel" aria-labelledby="datos-tab">
+        <div class="perfil-section-title">Información básica</div>
+        <div class="row perfil-card">
+          <div class="col-md-6 mb-3">
+            <div class="perfil-label">Nombre</div>
+            <div class="editable-container">
+              <div class="perfil-value" id="perfilNombre">Juan Pérez</div>
+              <i class="bi bi-pencil-square edit-icon" onclick="editarCampo('nombre')"></i>
+            </div>
+            <div id="editNombre" class="edit-form">
+              <div class="row g-2">
+                <div class="col-md-6">
+                  <div class="form-floating">
+                    <input type="text" class="form-control" id="inputNombre" placeholder="Nombre">
+                    <label for="inputNombre">Nombre</label>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-floating">
+                    <input type="text" class="form-control" id="inputApellido" placeholder="Apellido">
+                    <label for="inputApellido">Apellido</label>
+                  </div>
+                </div>
+              </div>
+              <button class="btn btn-sm btn-dark" onclick="guardarCampo('nombre')">Guardar</button>
+              <button class="btn btn-sm btn-outline-dark" onclick="cancelarEdicion('nombre')">Cancelar</button>
+            </div>
+          </div>
+          <div class="col-md-6 mb-3">
+            <div class="perfil-label">Correo electrónico</div>
+            <div class="perfil-value" id="perfilEmail">juan.perez@correo.com</div>
+          </div>
+          <div class="col-md-6 mb-3">
+            <div class="perfil-label">Tratamiento</div>
+            <div class="editable-container">
+              <div class="perfil-value" id="perfilTratamiento">Sr.</div>
+              <i class="bi bi-pencil-square edit-icon" onclick="editarCampo('tratamiento')"></i>
+            </div>
+            <div id="editTratamiento" class="edit-form">
+              <div class="form-floating">
+                <select class="form-select" id="inputTratamiento">
+                  <option value="">Seleccione...</option>
+                  <option value="Sr.">Sr.</option>
+                  <option value="Sra.">Sra.</option>
+                  <option value="Srta.">Srta.</option>
+                  <option value="Dr.">Dr.</option>
+                  <option value="Dra.">Dra.</option>
+                </select>
+                <label for="inputTratamiento">Tratamiento</label>
+              </div>
+              <button class="btn btn-sm btn-dark" onclick="guardarCampo('tratamiento')">Guardar</button>
+              <button class="btn btn-sm btn-outline-dark" onclick="cancelarEdicion('tratamiento')">Cancelar</button>
+            </div>
+          </div>
+          <div class="col-md-6 mb-3">
+            <div class="perfil-label">Fecha de nacimiento</div>
+            <div class="editable-container">
+              <div class="perfil-value" id="perfilNacimiento">1990-01-01</div>
+              <i class="bi bi-pencil-square edit-icon" onclick="editarCampo('nacimiento')"></i>
+            </div>
+            <div id="editNacimiento" class="edit-form">
+              <div class="form-floating">
+                <input type="date" class="form-control" id="inputNacimiento">
+                <label for="inputNacimiento">Fecha de nacimiento</label>
+              </div>
+              <button class="btn btn-sm btn-dark" onclick="guardarCampo('nacimiento')">Guardar</button>
+              <button class="btn btn-sm btn-outline-dark" onclick="cancelarEdicion('nacimiento')">Cancelar</button>
+            </div>
+          </div>
+        </div>
+        <!-- Acordeón para teléfonos y direcciones -->
+        <div class="accordion mt-4" id="perfilAccordion">
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="headingTelefonos">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTelefonos" aria-expanded="false" aria-controls="collapseTelefonos">
+                Números de teléfono
+              </button>
+            </h2>
+            <div id="collapseTelefonos" class="accordion-collapse collapse" aria-labelledby="headingTelefonos" data-bs-parent="#perfilAccordion">
+              <div class="accordion-body">
+                <div id="telefonosList">
+                  <div class="text-muted">No ha guardado ningún número de teléfono</div>
+                </div>
+                <button class="btn btn-outline-dark mt-3" id="btnAddTelefono">+ Añadir número de teléfono</button>
+                <form id="formTelefono" class="mt-3 d-none">
+                  <div class="input-group mb-2">
+                    <input type="text" class="form-control" id="inputTelefono" placeholder="Número de teléfono">
+                    <button class="btn btn-success" type="submit">Guardar</button>
+                    <button class="btn btn-secondary" type="button" id="btnCancelTelefono">Cancelar</button>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="telefonoPreferido">
+                    <label class="form-check-label" for="telefonoPreferido">Preferido</label>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+          <!-- Direcciones -->
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="headingDirecciones">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseDirecciones" aria-expanded="false" aria-controls="collapseDirecciones">
+                Direcciones
+              </button>
+            </h2>
+            <div id="collapseDirecciones" class="accordion-collapse collapse" aria-labelledby="headingDirecciones" data-bs-parent="#perfilAccordion">
+              <div class="accordion-body">
+                <div id="direccionesList">
+                  <div class="text-muted">No ha guardado ninguna dirección</div>
+                </div>
+                <button class="btn btn-outline-dark mt-3" id="btnAddDireccion">+ Añadir dirección</button>
+                <form id="formDireccion" class="mt-3 d-none">
+                  <div class="mb-2">
+                    <label class="form-label">Tipo de dirección *</label><br>
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="radio" name="tipoDireccion" id="tipoParticular" value="Particular" checked>
+                      <label class="form-check-label" for="tipoParticular">Particular</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="radio" name="tipoDireccion" id="tipoTrabajo" value="Trabajo">
+                      <label class="form-check-label" for="tipoTrabajo">Trabajo</label>
+                    </div>
+                  </div>
+                  <div class="row g-2">
+                    <div class="col-md-6 mb-2">
+                      <label class="form-label">País *</label>
+                      <select class="form-select" id="inputPais" required>
+                        <option value="">Selecciona un país</option>
+                        <option value="México">México</option>
+                        <option value="Estados Unidos">Estados Unidos</option>
+                        <option value="Canadá">Canadá</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="row g-2">
+                    <div class="col-md-8 mb-2">
+                      <label class="form-label">Calle *</label>
+                      <input type="text" class="form-control" id="inputCalle" required>
+                    </div>
+                    <div class="col-md-4 mb-2">
+                      <label class="form-label">Número *</label>
+                      <input type="text" class="form-control" id="inputNumero" required>
+                    </div>
+                  </div>
+                  <div class="row g-2">
+                    <div class="col-md-6 mb-2">
+                      <label class="form-label">Localidad *</label>
+                      <input type="text" class="form-control" id="inputLocalidad" required>
+                    </div>
+                    <div class="col-md-6 mb-2">
+                      <label class="form-label">Colonia</label>
+                      <input type="text" class="form-control" id="inputColonia">
+                    </div>
+                  </div>
+                  <div class="row g-2">
+                    <div class="col-md-6 mb-2">
+                      <label class="form-label">Ciudad *</label>
+                      <input type="text" class="form-control" id="inputCiudad" required>
+                    </div>
+                    <div class="col-md-3 mb-2">
+                      <label class="form-label">Código postal *</label>
+                      <input type="text" class="form-control" id="inputCodigoPostal" required>
+                    </div>
+                    <div class="col-md-3 mb-2">
+                      <label class="form-label">Estado *</label>
+                      <select class="form-select" id="inputEstado" required>
+                        <option value="">Selecciona un estado</option>
+                        <option value="CDMX">CDMX</option>
+                        <option value="Edo. México">Edo. México</option>
+                        <option value="Jalisco">Jalisco</option>
+                        <option value="Nuevo León">Nuevo León</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="checkbox" id="direccionPreferida">
+                    <label class="form-check-label" for="direccionPreferida">Esta es mi dirección preferida</label>
+                  </div>
+                  <button class="btn btn-dark me-2" type="submit" id="btnGuardarDireccion">Guardar</button>
+                  <button class="btn btn-outline-dark" type="button" id="btnCancelDireccion">Cancelar</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Medios de pago -->
+      <div class="tab-pane fade" id="pago" role="tabpanel" aria-labelledby="pago-tab">
+        <div class="perfil-section-title">Medios de pago registrados</div>
+        <div class="perfil-card">
+          <div id="tarjetasList">
+            <div class="text-muted">No hay medios de pago registrados.</div>
+          </div>
+          <button class="btn btn-outline-dark mt-3" id="btnAddTarjeta">+ Añadir tarjeta</button>
+        </div>
+      </div>
+
+      <!-- Modal para añadir tarjeta -->
+      <div class="modal fade" id="tarjetaModal" tabindex="-1" aria-labelledby="tarjetaModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="tarjetaModalLabel">Añadir nueva tarjeta</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form id="formTarjeta">
+                <div class="mb-3">
+                  <label class="form-label">Aceptamos las siguientes tarjetas:</label>
+                  <div class="d-flex gap-2 mb-3">
+                    <img src="https://cdn-icons-png.flaticon.com/128/349/349221.png" alt="Visa" height="30">
+                    <img src="https://cdn-icons-png.flaticon.com/128/196/196578.png" alt="MasterCard" height="30">
+                    <img src="https://cdn-icons-png.flaticon.com/128/349/349228.png" alt="American Express" height="30">
+                    <img src="https://cdn-icons-png.flaticon.com/128/11041/11041055.png" alt="JCB" height="30">
+                    <img src="https://cdn-icons-png.flaticon.com/128/349/349249.png" alt="Discover" height="30">
+                  </div>
+                  <p class="text-muted small">Los campos identificados con * son obligatorios.</p>
+                </div>
+
+                <div class="mb-3">
+                  <label for="titularTarjeta" class="form-label">Titular de la tarjeta *</label>
+                  <input type="text" class="form-control" id="titularTarjeta" required>
+                </div>
+
+                <div class="mb-3">
+                  <label for="numeroTarjeta" class="form-label">Número de tarjeta de crédito *</label>
+                  <input type="text" class="form-control" id="numeroTarjeta" placeholder="XXXX XXXX XXXX XXXX" required>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <label for="fechaExpiracion" class="form-label">Fecha de vencimiento *</label>
+                    <input type="text" class="form-control" id="fechaExpiracion" placeholder="MM/AA" required>
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label for="cvv" class="form-label">Código de seguridad *</label>
+                    <input type="text" class="form-control" id="cvv" placeholder="3 dígitos" required>
+                    <small class="text-muted">Los 3 dígitos en el reverso de tu tarjeta</small>
+                  </div>
+                </div>
+
+                <div class="form-check mb-3">
+                  <input class="form-check-input" type="checkbox" id="tarjetaPreferida">
+                  <label class="form-check-label" for="tarjetaPreferida">
+                    Almacenar este método de pago como preferido
+                  </label>
+                </div>
+
+                <div class="mb-3">
+                  <div class="d-flex align-items-center">
+                    <i class="bi bi-shield-lock fs-4 me-2"></i>
+                    <div>
+                      <p class="mb-0 fw-bold">Puede producirse una verificación 3D Secure</p>
+                      <small class="text-muted">Verifique con la aplicación de su banco</small>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+              <button type="button" class="btn btn-dark" id="btnGuardarTarjeta">Guardar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Compras -->
+      <div class="tab-pane fade" id="compras" role="tabpanel" aria-labelledby="compras-tab">
+        <div class="perfil-section-title">Mis compras</div>
+        <div class="row perfil-card">
+          <div class="col-12">
+            <div id="comprasContainer" class="compras-container">
+              <div class="text-center my-4" id="comprasLoader">
+                <div class="spinner-border text-secondary" role="status">
+                  <span class="visually-hidden">Cargando...</span>
+                </div>
+                <p class="mt-2">Cargando historial de compras...</p>
+              </div>
+              <div id="comprasListado" class="compras-listado d-none">
+              </div>
+              <div id="comprasEmpty" class="text-center my-4 d-none">
+                <div class="empty-compras">
+                  <img src="assets/porsche-icon.svg" alt="Porsche Icon" width="80">
+                  <p class="mt-3">No tienes compras realizadas</p>
+                  <p class="text-muted small">Explora nuestros modelos y realiza tu primera compra</p>
+                  <a href="index.html" class="btn btn-outline-dark mt-2">Ver modelos</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="components/utils.js"></script>
+  <script src="components/auth.js"></script>
+  <script>
+  async function cargarPerfil() {
+    try {
+      // Verificar si el usuario está autenticado
+      const token = localStorage.getItem('token');
+      if (!token) {
+        console.log("No hay sesión iniciada, redirigiendo...");
+        window.location.href = 'myporsche.html';
+        return;
+      }
+      
+      const response = await fetch('http://localhost:3000/api/usuarios/perfil', {
+        headers: {
+          'Authorization': 'Bearer ' + token
+        }
+      });
+      
+      if (!response.ok) {
+        console.error("Error al obtener perfil:", response.status);
+        localStorage.removeItem('token'); // Eliminar token inválido
+        window.location.href = 'myporsche.html';
+        return;
+      }
+      
+      const usuario = await response.json();
+      
+      window._nombreOriginal = usuario.perfil?.nombre || '';
+      window._apellidoOriginal = usuario.perfil?.apellido || '';
+      window._tratamientoOriginal = usuario.perfil?.tratamiento || '';
+      window._nacimientoOriginal = usuario.perfil?.fechaNacimiento || '';
+      
+      // Mostrar los datos
+      document.getElementById('perfilNombre').textContent = (usuario.perfil?.nombre || '') + ' ' + (usuario.perfil?.apellido || '');
+      document.getElementById('perfilEmail').textContent = usuario.email;
+      document.getElementById('perfilTratamiento').textContent = usuario.perfil?.tratamiento || '';
+      document.getElementById('perfilNacimiento').textContent = usuario.perfil?.fechaNacimiento
+        ? new Date(usuario.perfil.fechaNacimiento).toLocaleDateString()
+        : '';
+      
+      // Guardar el usuario para acceso global
+      window._usuario = usuario;
+      
+      mostrarTelefonos(usuario.perfil?.telefonos || []);
+      mostrarDirecciones(usuario.perfil?.direcciones || []);
+      mostrarTarjetas(usuario.perfil?.tarjetas || []);
+      
+      const activeTab = document.querySelector('.nav-link.active');
+      if (activeTab && activeTab.id === 'compras-tab') {
+        cargarHistorialCompras();
+      }
+      
+      console.log("Perfil cargado correctamente");
+    } catch (err) {
+      console.error("Error al cargar perfil:", err);
+      alert('Error al cargar el perfil. Por favor, intente de nuevo más tarde.');
+      window.location.href = 'myporsche.html';
+    }
+  }
+
+  function mostrarTelefonos(telefonos) {
+    const list = document.getElementById('telefonosList');
+    list.innerHTML = '';
+    if (!telefonos.length) {
+      list.innerHTML = '<div class="text-muted">No ha guardado ningún número de teléfono</div>';
+      return;
+    }
+    telefonos.forEach((tel, idx) => {
+      const div = document.createElement('div');
+      div.className = 'd-flex align-items-center justify-content-between border rounded p-2 mb-2';
+      div.innerHTML = `<span>${tel.numero} ${tel.preferido ? '<span class=\'badge bg-primary\'>Preferido</span>' : ''}</span>
+        <button class='btn btn-sm btn-danger' onclick='eliminarTelefono(${idx})'>Eliminar</button>`;
+      list.appendChild(div);
+    });
+  }
+
+  function mostrarDirecciones(direcciones) {
+    const list = document.getElementById('direccionesList');
+    list.innerHTML = '';
+    if (!direcciones.length) {
+      list.innerHTML = '<div class="text-muted">No ha guardado ninguna dirección</div>';
+      return;
+    }
+    direcciones.forEach((dir, idx) => {
+      const div = document.createElement('div');
+      div.className = 'border rounded p-2 mb-2 d-flex justify-content-between align-items-center';
+      div.innerHTML = `<div><b>${dir.tipo || ''}</b> - ${dir.calle || ''} ${dir.numero || ''}, ${dir.localidad || ''}, ${dir.colonia || ''}, ${dir.ciudad || ''}, ${dir.estado || ''}, ${dir.codigoPostal || ''}, ${dir.pais || ''} ${dir.preferida ? '<span class=\'badge bg-primary\'>Preferida</span>' : ''}</div>
+        <div>
+          <button class='btn btn-sm btn-secondary me-2' onclick='editarDireccion(${idx})'>Editar</button>
+          <button class='btn btn-sm btn-danger' onclick='eliminarDireccion(${idx})'>Eliminar</button>
+        </div>`;
+      list.appendChild(div);
+    });
+  }
+
+  // Teléfonos
+  const btnAddTelefono = document.getElementById('btnAddTelefono');
+  const formTelefono = document.getElementById('formTelefono');
+  const btnCancelTelefono = document.getElementById('btnCancelTelefono');
+  btnAddTelefono.onclick = () => { formTelefono.classList.remove('d-none'); };
+  btnCancelTelefono.onclick = () => { formTelefono.classList.add('d-none'); };
+  formTelefono.onsubmit = async function(e) {
+    e.preventDefault();
+    const numero = document.getElementById('inputTelefono').value;
+    const preferido = document.getElementById('telefonoPreferido').checked;
+    let telefonos = window._usuario.perfil.telefonos || [];
+    telefonos.push({ numero, preferido });
+    await guardarPerfil({ telefonos });
+    formTelefono.reset();
+    formTelefono.classList.add('d-none');
+  };
+  window.eliminarTelefono = async function(idx) {
+    let telefonos = window._usuario.perfil.telefonos || [];
+    telefonos.splice(idx, 1);
+    await guardarPerfil({ telefonos });
+  };
+
+  // Lógica para añadir/editar direcciones
+  let editDireccionIdx = null;
+  const btnAddDireccion = document.getElementById('btnAddDireccion');
+  const formDireccion = document.getElementById('formDireccion');
+  const btnCancelDireccion = document.getElementById('btnCancelDireccion');
+  const btnGuardarDireccion = document.getElementById('btnGuardarDireccion');
+  btnAddDireccion.onclick = () => {
+    editDireccionIdx = null;
+    formDireccion.reset();
+    formDireccion.classList.remove('d-none');
+  };
+  btnCancelDireccion.onclick = () => {
+    formDireccion.classList.add('d-none');
+    editDireccionIdx = null;
+  };
+  formDireccion.onsubmit = async function(e) {
+    e.preventDefault();
+    console.log("Formulario de dirección enviado");
+    
+    console.log("Campos:", {
+      pais: document.getElementById('inputPais')?.value,
+      calle: document.getElementById('inputCalle')?.value,
+      numero: document.getElementById('inputNumero')?.value,
+      localidad: document.getElementById('inputLocalidad')?.value,
+      ciudad: document.getElementById('inputCiudad')?.value,
+      codigoPostal: document.getElementById('inputCodigoPostal')?.value,
+      estado: document.getElementById('inputEstado')?.value
+    });
+    
+    if (!document.getElementById('inputPais').value || 
+        !document.getElementById('inputCalle').value || 
+        !document.getElementById('inputNumero').value || 
+        !document.getElementById('inputLocalidad').value || 
+        !document.getElementById('inputCiudad').value || 
+        !document.getElementById('inputCodigoPostal').value || 
+        !document.getElementById('inputEstado').value) {
+      console.log("Validación fallida: campos obligatorios sin completar");
+      alert('Por favor, completa todos los campos obligatorios.');
+      return;
+    }
+    
+    const nuevaDireccion = {
+      tipo: document.querySelector('input[name="tipoDireccion"]:checked').value,
+      pais: document.getElementById('inputPais').value,
+      calle: document.getElementById('inputCalle').value,
+      numero: document.getElementById('inputNumero').value,
+      localidad: document.getElementById('inputLocalidad').value,
+      colonia: document.getElementById('inputColonia').value,
+      ciudad: document.getElementById('inputCiudad').value,
+      codigoPostal: document.getElementById('inputCodigoPostal').value,
+      estado: document.getElementById('inputEstado').value,
+      preferida: document.getElementById('direccionPreferida').checked
+    };
+    
+    console.log("Nueva dirección a guardar:", nuevaDireccion);
+    
+    let direcciones = [];
+    if (window._usuario && window._usuario.perfil && window._usuario.perfil.direcciones) {
+      direcciones = [...window._usuario.perfil.direcciones];
+    }
+    
+    if (editDireccionIdx !== null) {
+      console.log("Editando dirección existente en índice:", editDireccionIdx);
+      direcciones[editDireccionIdx] = nuevaDireccion;
+    } else {
+      console.log("Agregando nueva dirección");
+      direcciones.push(nuevaDireccion);
+    }
+    
+    console.log("Direcciones para guardar:", direcciones);
+    
+    try {
+      await guardarPerfil({ direcciones });
+      console.log("Perfil guardado con éxito");
+      formDireccion.reset();
+      formDireccion.classList.add('d-none');
+      editDireccionIdx = null;
+    } catch (error) {
+      console.error("Error al guardar el perfil:", error);
+      alert("Error al guardar la dirección. Por favor, intenta de nuevo.");
+    }
+  };
+  window.editarDireccion = function(idx) {
+    const dir = window._usuario.perfil.direcciones[idx];
+    editDireccionIdx = idx;
+    formDireccion.classList.remove('d-none');
+    document.querySelector('input[name="tipoDireccion"][value="' + (dir.tipo || 'Particular') + '"]').checked = true;
+    document.getElementById('inputPais').value = dir.pais || '';
+    document.getElementById('inputCalle').value = dir.calle || '';
+    document.getElementById('inputNumero').value = dir.numero || '';
+    document.getElementById('inputLocalidad').value = dir.localidad || '';
+    document.getElementById('inputColonia').value = dir.colonia || '';
+    document.getElementById('inputCiudad').value = dir.ciudad || '';
+    document.getElementById('inputCodigoPostal').value = dir.codigoPostal || '';
+    document.getElementById('inputEstado').value = dir.estado || '';
+    document.getElementById('direccionPreferida').checked = !!dir.preferida;
+  };
+  window.eliminarDireccion = async function(idx) {
+    let direcciones = window._usuario.perfil.direcciones || [];
+    direcciones.splice(idx, 1);
+    await guardarPerfil({ direcciones });
+  };
+
+  window.editarCampo = function(tipo) {
+    switch(tipo) {
+      case 'nombre':
+        document.getElementById('inputNombre').value = window._nombreOriginal || '';
+        document.getElementById('inputApellido').value = window._apellidoOriginal || '';
+        document.getElementById('editNombre').style.display = 'block';
+        break;
+      case 'tratamiento':
+        document.getElementById('inputTratamiento').value = window._tratamientoOriginal || '';
+        document.getElementById('editTratamiento').style.display = 'block';
+        break;
+      case 'nacimiento':
+        if (window._nacimientoOriginal) {
+          const fecha = new Date(window._nacimientoOriginal);
+          const year = fecha.getFullYear();
+          const month = String(fecha.getMonth() + 1).padStart(2, '0');
+          const day = String(fecha.getDate()).padStart(2, '0');
+          document.getElementById('inputNacimiento').value = `${year}-${month}-${day}`;
+        } else {
+          document.getElementById('inputNacimiento').value = '';
+        }
+        document.getElementById('editNacimiento').style.display = 'block';
+        break;
+    }
+  };
+
+  window.cancelarEdicion = function(tipo) {
+    document.getElementById(`edit${tipo.charAt(0).toUpperCase() + tipo.slice(1)}`).style.display = 'none';
+  };
+
+  window.guardarCampo = async function(tipo) {
+    let datosPerfil = {};
+    
+    switch(tipo) {
+      case 'nombre':
+        datosPerfil = {
+          nombre: document.getElementById('inputNombre').value,
+          apellido: document.getElementById('inputApellido').value
+        };
+        break;
+      case 'tratamiento':
+        datosPerfil = {
+          tratamiento: document.getElementById('inputTratamiento').value
+        };
+        break;
+      case 'nacimiento':
+        datosPerfil = {
+          fechaNacimiento: document.getElementById('inputNacimiento').value
+        };
+        break;
+    }
+    
+    try {
+      await guardarPerfil(datosPerfil);
+      
+      // Actualizar los valores originales
+      if (tipo === 'nombre') {
+        window._nombreOriginal = datosPerfil.nombre;
+        window._apellidoOriginal = datosPerfil.apellido;
+        document.getElementById('perfilNombre').textContent = datosPerfil.nombre + ' ' + datosPerfil.apellido;
+      } else if (tipo === 'tratamiento') {
+        window._tratamientoOriginal = datosPerfil.tratamiento;
+        document.getElementById('perfilTratamiento').textContent = datosPerfil.tratamiento;
+      } else if (tipo === 'nacimiento') {
+        window._nacimientoOriginal = datosPerfil.fechaNacimiento;
+        document.getElementById('perfilNacimiento').textContent = new Date(datosPerfil.fechaNacimiento).toLocaleDateString();
+      }
+      
+      // Ocultar formulario
+      document.getElementById(`edit${tipo.charAt(0).toUpperCase() + tipo.slice(1)}`).style.display = 'none';
+    } catch (error) {
+      console.error('Error al guardar campo:', error);
+      alert('Error al guardar cambios');
+    }
+  };
+
+  async function guardarPerfil(nuevosCampos) {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      console.error("Token no encontrado");
+      alert('Debe iniciar sesión para guardar cambios en el perfil');
+      window.location.href = 'myporsche.html';
+      return;
+    }
+    
+    let perfil = {};
+    if (window._usuario && window._usuario.perfil) {
+      perfil = JSON.parse(JSON.stringify(window._usuario.perfil));
+    } else {
+      console.warn('No hay perfil en _usuario, creando uno nuevo');
+    }
+    
+    perfil = { ...perfil, ...nuevosCampos };
+    
+    console.log("Datos a enviar:", { perfil });
+    
+    if (nuevosCampos.tarjetas) {
+      console.log("Tarjetas a guardar:", nuevosCampos.tarjetas);
+    }
+    
+    try {
+      console.log("Enviando solicitud PUT a /api/usuarios/editar");
+      const res = await fetch('http://localhost:3000/api/usuarios/editar', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + token
+        },
+        body: JSON.stringify({ perfil })
+      });
+      
+      console.log("Respuesta recibida:", res.status, res.statusText);
+      
+      if (res.ok) {
+        const usuario = await res.json();
+        console.log("Datos actualizados recibidos:", usuario);
+        
+        window._usuario = usuario;
+        
+        if (typeof mostrarTelefonos === 'function' && usuario.perfil?.telefonos) {
+          mostrarTelefonos(usuario.perfil.telefonos);
+        }
+        
+        if (typeof mostrarDirecciones === 'function' && usuario.perfil?.direcciones) {
+          mostrarDirecciones(usuario.perfil.direcciones);
+        }
+        
+        if (typeof mostrarTarjetas === 'function' && document.getElementById('tarjetasList')) {
+          console.log("Actualizando visualización de tarjetas:", usuario.perfil?.tarjetas);
+          mostrarTarjetas(usuario.perfil?.tarjetas || []);
+        }
+        
+        alert('Datos guardados correctamente');
+        return true;
+      } else {
+        let errorMsg = 'Error desconocido';
+        try {
+          const errorData = await res.json();
+          console.error("Error en respuesta:", errorData);
+          errorMsg = errorData.error || 'Error al guardar los cambios';
+        } catch (parseError) {
+          console.error("Error al procesar respuesta JSON:", parseError);
+          errorMsg = `Error ${res.status}: ${res.statusText}`;
+        }
+        
+        alert('Error al guardar: ' + errorMsg);
+        return false;
+      }
+    } catch (error) {
+      console.error("Error en la solicitud:", error);
+      alert('Error de red al guardar los cambios: ' + error.message);
+      return false;
+    }
+  }
+
+  // Función para cargar el historial de compras
+  async function cargarHistorialCompras() {
+    console.log('Cargando historial de compras...');
+    
+    if (window._loadingCompras) {
+      console.log('Ya hay una carga de compras en progreso, abortando...');
+      return;
+    }
+    
+    window._loadingCompras = true;
+    
+    const comprasListado = document.getElementById('comprasListado');
+    const comprasLoader = document.getElementById('comprasLoader');
+    const comprasEmpty = document.getElementById('comprasEmpty');
+    
+    if (!comprasListado || !comprasLoader || !comprasEmpty) {
+      console.error('Elementos necesarios no encontrados en el DOM');
+      window._loadingCompras = false;
+      return;
+    }
+    
+    comprasListado.classList.add('d-none');
+    comprasEmpty.classList.add('d-none');
+    comprasLoader.classList.remove('d-none');
+    
+    try {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        throw new Error('No hay token disponible');
+      }
+      
+      const response = await fetch('http://localhost:3000/api/pedidos', {
+        headers: {
+          'Authorization': 'Bearer ' + token
+        }
+      });
+      
+      if (!response.ok) {
+        throw new Error(`Error al obtener historial de pedidos: ${response.status}`);
+      }
+      
+      const pedidos = await response.json();
+      console.log('Pedidos obtenidos:', pedidos);
+      
+      comprasLoader.classList.add('d-none');
+      
+      if (!pedidos.length) {
+        comprasEmpty.classList.remove('d-none');
+        window._loadingCompras = false;
+        return;
+      }
+      
+      // Limpiar contenedor y mostrar
+      comprasListado.innerHTML = '';
+      comprasListado.classList.remove('d-none');
+      
+      pedidos.sort((a, b) => new Date(b.fecha) - new Date(a.fecha));
+      
+      pedidos.forEach(pedido => {
+        const fechaPedido = new Date(pedido.fecha);
+        const fechaFormateada = fechaPedido.toLocaleDateString('es-ES', {
+          day: '2-digit',
+          month: '2-digit',
+          year: 'numeric'
+        });
+        
+        let modeloNombre = '';
+        let modeloPrecio = 0;
+        let modeloId = '';
+        
+        if (pedido.modelo) {
+          if (typeof pedido.modelo === 'object') {
+            modeloNombre = pedido.modelo.nombre || 'Modelo no disponible';
+            modeloPrecio = pedido.modelo.precio || 0;
+            modeloId = pedido.modelo._id || '';
+          } else {
+            modeloId = pedido.modelo;
+            modeloNombre = 'Modelo no disponible';
+          }
+        }
+        
+        const itemsHtml = `
+          <div class="p-2 border-bottom">
+            <h5 class="mb-1">${modeloNombre}</h5>
+            <p class="mb-1 fw-bold">${formatearPrecio(pedido.total || modeloPrecio)}</p>
+            <p class="text-muted small mb-0">ID: ${modeloId}</p>
+          </div>
+        `;
+        
+        const pedidoHtml = `
+          <div class="compra-card ${pedido.estado === 'devuelto' ? 'compra-devuelta' : ''}">
+            <div class="compra-header">
+              <div>
+                <h5 class="mb-0">Pedido #${pedido._id}</h5>
+                <p class="text-muted mb-0">Fecha: ${fechaFormateada}</p>
+              </div>
+              <div>
+                <span class="compra-estado ${pedido.estado !== 'devuelto' ? 'estado-completado' : 'estado-devuelto'}">
+                  ${pedido.estado === 'devuelto' ? 'Devuelto' : 'Completado'}
+                </span>
+                <p class="text-muted text-end mb-0">Total: ${formatearPrecio(pedido.total)}</p>
+              </div>
+            </div>
+            <div class="compra-body">
+              ${itemsHtml}
+            </div>
+            <div class="compra-footer">
+              <p class="text-muted small">Método de pago: Tarjeta de crédito</p>
+              ${pedido.estado !== 'devuelto' ? `
+                <button class="btn btn-sm btn-outline-danger btn-devolucion" data-pedido-id="${pedido._id}">
+                  Solicitar devolución
+                </button>
+              ` : `
+                <p class="text-danger small">Devuelto el ${new Date(pedido.fechaDevolucion).toLocaleDateString()}</p>
+              `}
+            </div>
+          </div>
+        `;
+        
+        comprasListado.innerHTML += pedidoHtml;
+      });
+      
+    } catch (error) {
+      console.error('Error al cargar historial de pedidos:', error);
+      const comprasLoader = document.getElementById('comprasLoader');
+      const comprasEmpty = document.getElementById('comprasEmpty');
+      
+      if (comprasLoader) comprasLoader.classList.add('d-none');
+      
+      if (comprasEmpty) {
+        comprasEmpty.classList.remove('d-none');
+        comprasEmpty.innerHTML = `
+          <div class="empty-compras">
+            <p class="text-danger">Error al cargar historial de pedidos: ${error.message}</p>
+            <button class="btn btn-outline-dark mt-2" onclick="cargarHistorialCompras()">
+              Reintentar
+            </button>
+          </div>
+        `;
+      }
+    } finally {
+      window._loadingCompras = false;
+    }
+  }
+  
+  // Función para solicitar devolución
+  async function solicitarDevolucion(pedidoId) {
+    try {
+      console.log('Solicitando devolución para pedido:', pedidoId);
+      
+      if (!confirm('¿Estás seguro que deseas solicitar la devolución de este pedido? Esta acción no puede deshacerse.')) {
+        return;
+      }
+      
+      // Solicitar motivo
+      const motivo = prompt('Por favor, indica el motivo de la devolución:');
+      if (!motivo) {
+        alert('Debes proporcionar un motivo para la devolución.');
+        return;
+      }
+      
+      alert('Procesando devolución, por favor espere...');
+      
+      const token = localStorage.getItem('token');
+      const response = await fetch(`http://localhost:3000/api/pedidos/${pedidoId}/devolucion`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          motivo
+        })
+      });
+      
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.error || 'Error al procesar devolución');
+      }
+      
+      const resultado = await response.json();
+      console.log('Resultado de devolución:', resultado);
+      
+      alert('¡Devolución procesada correctamente!');
+      
+      // Recargar historial de pedidos
+      cargarHistorialCompras();
+      
+    } catch (error) {
+      console.error('Error al procesar devolución:', error);
+      alert('Error: ' + (error.message || 'Error al procesar la devolución'));
+    }
+  }
+  
+  window.solicitarDevolucion = solicitarDevolucion;
+
+  function formatearPrecio(precio) {
+    return new Intl.NumberFormat('es-MX', {
+      style: 'currency',
+      currency: 'MXN'
+    }).format(precio);
+  }
+
+  let handleComprasTabClick; 
+
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('button[data-bs-toggle="tab"]').forEach(function(tabEl) {
+      let tab = new bootstrap.Tab(tabEl);
+    });
+
+    const comprasTab = document.getElementById('compras-tab');
+    
+    if (comprasTab) {
+      console.log('Tab de compras encontrado, configurando listener');
+      
+     
+      document.querySelector('a[data-bs-toggle="tab"], button[data-bs-toggle="tab"]').addEventListener('shown.bs.tab', function(event) {
+        if (event.target.id === 'compras-tab') {
+          console.log('Tab de compras activado - cargando compras');
+          cargarHistorialCompras();
+        }
+      });
+      
+      comprasTab.addEventListener('click', function() {
+        console.log('Click directo en compras-tab');
+        setTimeout(cargarHistorialCompras, 100);
+      });
+
+      const params = new URLSearchParams(window.location.search);
+      if (params.get('tab') === 'compras') {
+        console.log('Parámetro tab=compras en URL - activando tab');
+        const tabTrigger = new bootstrap.Tab(comprasTab);
+        tabTrigger.show();
+        setTimeout(cargarHistorialCompras, 300);
+      }
+    } else {
+      console.error('No se encontró el elemento con id "compras-tab"');
+    }
+  });
+
+  // Cargar perfil al inicio
+  window.onload = function() {
+    console.log('Cargando página - onload fired');
+    cargarPerfil();
+    
+    const comprasListado = document.getElementById('comprasListado');
+    if (comprasListado) {
+      console.log('Configurando delegación de eventos para botones de devolución');
+      comprasListado.addEventListener('click', function(e) {
+        const button = e.target.closest('.btn-devolucion');
+        if (button) {
+          const pedidoId = button.getAttribute('data-pedido-id');
+          
+          if (pedidoId) {
+            e.preventDefault();
+            console.log('Delegación de eventos - solicitando devolución para:', pedidoId);
+            solicitarDevolucion(pedidoId);
+          } else {
+            console.error('No se encontró el ID del pedido en el botón de devolución');
+          }
+        }
+      });
+      console.log('Evento de delegación para devoluciones configurado correctamente');
+    }
+  };
+
+  // Función global para mostrar tarjetas
+  function mostrarTarjetas(tarjetas) {
+    const list = document.getElementById('tarjetasList');
+    if (!list) {
+      console.error('Element with ID "tarjetasList" not found');
+      return;
+    }
+    
+    list.innerHTML = '';
+    
+    if (!tarjetas || !tarjetas.length) {
+      list.innerHTML = '<div class="text-muted">No hay medios de pago registrados.</div>';
+      return;
+    }
+    
+    console.log("Mostrando tarjetas:", tarjetas);
+    
+    tarjetas.forEach((tarjeta, idx) => {
+      const tarjetaElement = document.createElement('div');
+      tarjetaElement.className = 'border rounded p-3 mb-3 d-flex justify-content-between align-items-center';
+      
+      let logoSrc = '';
+      switch(String(tarjeta.tipo).toLowerCase()) {
+        case 'visa':
+          logoSrc = 'https://cdn-icons-png.flaticon.com/128/349/349221.png';
+          break;
+        case 'mastercard':
+          logoSrc = 'https://cdn-icons-png.flaticon.com/128/196/196578.png';
+          break;
+        case 'amex':
+          logoSrc = 'https://cdn-icons-png.flaticon.com/128/349/349228.png';
+          break;
+        case 'discover':
+          logoSrc = 'https://cdn-icons-png.flaticon.com/128/349/349249.png';
+          break;
+        case 'jcb':
+          logoSrc = 'https://cdn-icons-png.flaticon.com/128/11041/11041055.png';
+          break;
+        default:
+          logoSrc = 'https://cdn-icons-png.flaticon.com/128/633/633611.png'; // Generic card
+      }
+      
+      tarjetaElement.innerHTML = `
+        <div class="d-flex align-items-center">
+          <img src="${logoSrc}" alt="${tarjeta.tipo}" height="30" class="me-3">
+          <div>
+            <div class="fw-bold">${tarjeta.tipo} **** ${tarjeta.ultimos4}</div>
+            <div class="text-muted small">Expira: ${tarjeta.expiracion} | ${tarjeta.titular}</div>
+            ${tarjeta.preferida ? '<span class="badge bg-primary">Preferida</span>' : ''}
+          </div>
+        </div>
+        <div>
+          <button class="btn btn-sm btn-danger" onclick="eliminarTarjeta(${idx})">Eliminar</button>
+        </div>
+      `;
+      
+      list.appendChild(tarjetaElement);
+    });
+  }
+
+  // Función global para eliminar tarjeta
+  async function eliminarTarjeta(idx) {
+    if (!confirm('¿Está seguro de que desea eliminar esta tarjeta?')) return;
+    
+    let tarjetas = [];
+    if (window._usuario && window._usuario.perfil && window._usuario.perfil.tarjetas) {
+      tarjetas = [...window._usuario.perfil.tarjetas];
+    }
+    
+    tarjetas.splice(idx, 1);
+    await guardarPerfil({ tarjetas });
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    if (typeof deshabilitarMenuOriginal === 'function') {
+      deshabilitarMenuOriginal();
+    } else {
+      console.warn('Función deshabilitarMenuOriginal no encontrada');
+    }
+    
+    const btnLogout = document.getElementById('btnLogout');
+    if (btnLogout) {
+      btnLogout.addEventListener('click', function(e) {
+        e.preventDefault();
+        // Eliminar el token del localStorage
+        localStorage.removeItem('token');
+        // Redireccionar a la página de inicio
+        window.location.href = 'index.html';
+      });
+    }
+    
+    const btnAddTarjeta = document.getElementById('btnAddTarjeta');
+    let tarjetaModal = null;
+    
+    const modalElement = document.getElementById('tarjetaModal');
+    if (!modalElement) {
+      console.error('El elemento modal con ID "tarjetaModal" no existe en el DOM');
+    } else {
+      console.log('Modal de tarjeta encontrado en el DOM');
+      try {
+        tarjetaModal = new bootstrap.Modal(modalElement);
+        console.log('Modal de tarjeta inicializado correctamente');
+      } catch (error) {
+        console.error('Error al inicializar modal de tarjeta:', error);
+        alert('Error al inicializar el formulario de tarjeta. Es posible que Bootstrap no esté cargado correctamente.');
+      }
+    }
+    
+    const btnGuardarTarjeta = document.getElementById('btnGuardarTarjeta');
+    if (!btnGuardarTarjeta) {
+      console.error('Botón guardar tarjeta no encontrado en el DOM');
+    } else {
+      console.log('Botón guardar tarjeta encontrado');
+    }
+    
+    // Función para detectar el tipo de tarjeta basado en los primeros dígitos
+    function detectarTipoTarjeta(numero) {
+      if (!numero) return 'Desconocida';
+      
+      const limpio = numero.replace(/\D/g, '');
+      if (limpio.length < 4) return 'Desconocida';
+      
+      console.log('Detectando tipo de tarjeta para número:', limpio.substring(0, 4) + '...');
+      
+      // Visa: comienza con 4
+      if (limpio.startsWith('4')) return 'VISA';
+      
+      // Mastercard: comienza con 51-55 o 2221-2720
+      if (/^5[1-5]/.test(limpio) || /^2[2-7][2-7]\d/.test(limpio)) return 'MasterCard';
+      
+      // American Express: comienza con 34 o 37
+      if (/^3[47]/.test(limpio)) return 'AMEX';
+      
+      // Discover: comienza con 6011, 622126-622925, 644-649, o 65
+      if (/^6(?:011|5|4[4-9])/.test(limpio) || /^62(?:2(?:12[6-9]|1[3-9]|[2-8])|2[2-9]|[3-9])/.test(limpio)) return 'Discover';
+      
+      // JCB: comienza con 3528-3589
+      if (/^35(?:2[89]|[3-8]\d)/.test(limpio)) return 'JCB';
+      
+      return 'Desconocida';
+    }
+    
+    if (btnAddTarjeta) {
+      btnAddTarjeta.addEventListener('click', () => {
+        console.log('Botón Añadir Tarjeta clickeado');
+        
+        const formTarjeta = document.getElementById('formTarjeta');
+        if (!formTarjeta) {
+          console.error('No se encontró el formulario de tarjeta en el DOM');
+          alert('Error: El formulario de tarjeta no está disponible');
+          return;
+        }
+        
+        formTarjeta.reset();
+        
+        if (!tarjetaModal) {
+          console.error('Modal no inicializado');
+          alert('Error: No se puede mostrar el formulario de tarjeta');
+          return;
+        }
+        
+        try {
+          tarjetaModal.show();
+          console.log('Modal de tarjeta mostrado correctamente');
+        } catch (error) {
+          console.error('Error al mostrar el modal de tarjeta:', error);
+          alert('Error al mostrar el formulario de tarjeta');
+        }
+      });
+    } else {
+      console.error('No se encontró el botón Añadir Tarjeta en el DOM');
+    }
+    
+    if (btnGuardarTarjeta) {
+      btnGuardarTarjeta.addEventListener('click', async () => {
+        console.log('Botón Guardar Tarjeta clickeado');
+        
+        const titularElement = document.getElementById('titularTarjeta');
+        const numeroElement = document.getElementById('numeroTarjeta');
+        const expiracionElement = document.getElementById('fechaExpiracion');
+        const cvvElement = document.getElementById('cvv');
+        const preferidaElement = document.getElementById('tarjetaPreferida');
+        
+        if (!titularElement || !numeroElement || !expiracionElement || !cvvElement || !preferidaElement) {
+          console.error('Faltan campos en el formulario de tarjeta');
+          alert('Error: Formulario incompleto');
+          return;
+        }
+        
+        const titular = titularElement.value;
+        const numero = numeroElement.value;
+        const expiracion = expiracionElement.value;
+        const cvv = cvvElement.value;
+        const preferida = preferidaElement.checked;
+        
+        console.log('Datos del formulario:', { 
+          titular, 
+          numero: numero ? `${numero.substring(0, 4)}...` : 'vacío', 
+          expiracion,
+          preferida,
+          cvvLength: cvv ? cvv.length : 0
+        });
+        
+        if (!titular || !numero || !expiracion || !cvv) {
+          alert('Por favor, complete todos los campos obligatorios.');
+          return;
+        }
+        
+        const numeroLimpio = numero.replace(/\D/g, '');
+        const ultimos4 = numeroLimpio.slice(-4);
+        
+        // Detectar tipo de tarjeta
+        const tipoTarjeta = detectarTipoTarjeta(numeroLimpio);
+        console.log('Tipo de tarjeta detectado:', tipoTarjeta);
+        
+        // Crear objeto tarjeta
+        const tarjeta = {
+          titular,
+          tipo: tipoTarjeta,
+          ultimos4,
+          expiracion,
+          preferida
+        };
+        
+        console.log('Objeto tarjeta creado:', tarjeta);
+        
+        let tarjetas = [];
+        if (window._usuario && window._usuario.perfil && window._usuario.perfil.tarjetas) {
+          tarjetas = JSON.parse(JSON.stringify(window._usuario.perfil.tarjetas));
+          console.log('Tarjetas existentes:', tarjetas);
+        }
+        
+        if (preferida) {
+          tarjetas.forEach(t => t.preferida = false);
+        }
+        
+        tarjetas.push(tarjeta);
+        console.log('Lista de tarjetas actualizada:', tarjetas);
+        
+        try {
+          console.log('Guardando tarjetas en el perfil...');
+          await guardarPerfil({ tarjetas });
+          
+          if (tarjetaModal) {
+            tarjetaModal.hide();
+            console.log('Modal oculto después de guardar');
+          }
+          
+          console.log('Tarjeta guardada correctamente');
+        } catch (error) {
+          console.error('Error al guardar la tarjeta:', error);
+          alert('Error al guardar la tarjeta. Por favor, intente de nuevo.');
+        }
+      });
+    }
+    
+    if (typeof window.cargarPerfil === 'function') {
+      const originalCargarPerfil = window.cargarPerfil;
+      window.cargarPerfil = async function() {
+        try {
+          await originalCargarPerfil();
+          
+          if (window._usuario && window._usuario.perfil && window._usuario.perfil.tarjetas) {
+            console.log("Mostrando tarjetas después de cargar perfil:", window._usuario.perfil.tarjetas);
+            mostrarTarjetas(window._usuario.perfil.tarjetas);
+          } else {
+            console.log("No hay tarjetas para mostrar después de cargar perfil");
+          }
+        } catch (error) {
+          console.error('Error al cargar perfil:', error);
+        }
+      };
+    } else {
+      console.error('La función cargarPerfil no está definida');
+    }
+  });
+
+  document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM completamente cargado');
+    
+    const comprasTab = document.getElementById('compras-tab');
+    if (comprasTab) {
+      comprasTab.addEventListener('click', function() {
+        console.log('Click en tab de compras');
+        setTimeout(cargarHistorialCompras, 100);
+      });
+      
+      const tabEl = document.querySelector('button[data-bs-toggle="tab"][id="compras-tab"]');
+      if (tabEl) {
+        tabEl.addEventListener('shown.bs.tab', function() {
+          console.log('Tab de compras mostrado por Bootstrap');
+          cargarHistorialCompras();
+        });
+      }
+      
+      if (window.location.search.includes('tab=compras')) {
+        try {
+          const tab = new bootstrap.Tab(comprasTab);
+          tab.show();
+        } catch (e) {
+          console.error('Error al activar tab con Bootstrap:', e);
+        }
+      }
+    }
+  });
+  </script>
+</body>
+</html> 

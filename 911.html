@@ -6,7 +6,10 @@
     <title>911 GT3 RS</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link rel="shortcut icon" href="assets/Porsche-logo.png" type="image/x-icon" />
+    <link rel="stylesheet" href="css/styles.css" />
     <link rel="stylesheet" href="css/911.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.32/dist/sweetalert2.min.css">
+    <script src="/components/utils.js"></script>
   </head>
   <body>
     <header id="header">
@@ -53,7 +56,7 @@
           <h3>296 km/h</h3>
           <p>Velocidad máxima</p>
         </div>
-        <button class="btn btn-light btn-lg">Comprar</button>
+        <button class="btn btn-light btn-lg" id="btnComprar911">Comprar</button>
       </div>
     </div>
 
@@ -108,7 +111,13 @@
       </div>
     </section>
 
+    <div id="pasarelaCompraContainer"></div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.32/dist/sweetalert2.all.min.js"></script>
+    <script src="/components/utils.js"></script>
+    <script src="/components/compra.js"></script>
+    <script src="/components/auth.js"></script>
     <script>
       window.addEventListener("scroll", function () {
         document.querySelectorAll(".video-section, .image-section").forEach(function (section) {
@@ -124,6 +133,67 @@
           }
         });
       });
+
+      const MODELO_911 = {
+        id: "911",
+        nombre: "911 Carrera GTS",
+        precio: 3250000
+      };
+      
+      // Cargar el componente de pasarela de compra
+      document.addEventListener('DOMContentLoaded', function() {
+        fetch('/components/pasarela-compra.html')
+          .then(response => {
+            if (!response.ok) {
+              throw new Error(`Error al cargar pasarela: ${response.status}`);
+            }
+            return response.text();
+          })
+          .then(html => {
+            document.getElementById('pasarelaCompraContainer').innerHTML = html;
+            console.log('Pasarela de compra cargada correctamente');
+            
+            configurarBotonCompra();
+          })
+          .catch(error => {
+            console.error('Error al cargar pasarela de compra:', error);
+            alert('Error al cargar la pasarela de compra. Por favor, recargue la página.');
+          });
+      });
+
+      function configurarBotonCompra() {
+        const btnComprar = document.getElementById('btnComprar911');
+        if (!btnComprar) {
+          console.error('No se encontró el botón de compra con ID: btnComprar911');
+          return;
+        }
+        
+        btnComprar.addEventListener('click', function() {
+          console.log('Botón de compra clickeado');
+          // Verificar si el usuario está autenticado
+          if (!verificarAutenticacion()) {
+            const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+            localStorage.setItem('redirect_after_login', currentPage);
+            
+            if (window.Swal) {
+              Swal.fire({
+                title: 'Iniciar sesión',
+                text: 'Debe iniciar sesión para realizar la compra',
+                icon: 'info',
+                confirmButtonText: 'Ir a iniciar sesión'
+              }).then(() => {
+                window.location.href = '/myporsche.html';
+              });
+            } else {
+              alert('Debe iniciar sesión para continuar');
+              window.location.href = '/myporsche.html';
+            }
+            return;
+          }
+          
+          iniciarProcesoCompra(MODELO_911.id, MODELO_911.nombre, MODELO_911.precio);
+        });
+      }
     </script>
   </body>
 </html>

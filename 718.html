@@ -8,8 +8,11 @@
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
       rel="stylesheet"
     />
+    <link rel="stylesheet" href="/css/styles.css" />
     <link rel="stylesheet" href="/css/718.css" />
     <link rel="shortcut icon" href="/assets/Porsche-logo.png" type="image/x-icon">
+    <!-- Sweet Alert 2 para los mensajes de alerta -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.32/dist/sweetalert2.min.css">
   </head>
   <body class="bg-light">
     <header id="header">
@@ -122,7 +125,7 @@
           <h1 class="fw-bold">718 Cayman Style Edition</h1>
           <p class="text-uppercase text-muted">Gasolina</p>
           <p class="h3 text-dark">MXN 1,548,000.00</p>
-          <button class="btn btn-dark btn-lg mt-3">Comprar</button>
+          <button class="btn btn-dark btn-lg mt-3" id="btnComprar718">Comprar</button>
         </div>
 
         <div class="row mt-4 align-items-center">
@@ -182,28 +185,18 @@
               El secreto del éxito para deportistas excepcionales: la creatividad. Entrenan diferente, rompen las normas y forjan un nuevo estilo. Cualquiera que conduzca uno de los modelos 718 Style Edition deja claro a primera vista que comparte esta mentalidad.
             </p>
           </div>
-          <img
-            src="assets/718/718-4.avif"
-            alt="Porsche 718 fondo"
-            class="overlap-img-behind"
-          />
-          <img
-            src="assets/718/718-3.avif"
-            alt="Porsche 718 superpuesto"
-            class="overlap-img"
-          />
-        </div>
-      </div>
-    </div>
-
-    <div class="container mt-5">
-      <div class="row justify-content-center">
-        <div class="col-md-8 text-center">
-          <img
-            src="assets/718/718-5.avif"
-            alt="Conductor y Porsche 718"
-            class="img-fluid lower-image"
-          />
+          <div class="position-relative" style="height: 600px; overflow: hidden;">
+            <img
+              src="assets/718/718-4.avif"
+              alt="Porsche 718 fondo"
+              class="black-box-image-behind"
+            />
+            <img
+              src="assets/718/718-3.avif"
+              alt="Porsche 718 superpuesto"
+              class="black-box-image-front"
+            />
+          </div>
         </div>
       </div>
     </div>
@@ -304,7 +297,88 @@
       </div>
     </div>
 
+    <div id="pasarelaCompraContainer"></div>
+
     <script src="/components/custom-video-player.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.32/dist/sweetalert2.all.min.js"></script>
+    <script src="/components/utils.js"></script>
+    <script src="/components/compra.js"></script>
+    <script src="/components/auth.js"></script>
+    <script>
+      const originalFetch = window.fetch;
+      window.fetch = function(url, options) {
+        if (url.includes('.well-known/appspecific/com.chrome.devtools.json')) {
+          return new Promise((resolve) => {
+            resolve({ ok: true, json: () => Promise.resolve({}) });
+          });
+        }
+        return originalFetch(url, options);
+      };
+    </script>
+    <script>
+      const MODELO_718 = {
+        id: "718",
+        nombre: "718 Cayman Style Edition",
+        precio: 1548000
+      };
+      
+      document.addEventListener('DOMContentLoaded', function() {
+        // Cargar el modal de pasarela
+        fetch('/components/pasarela-compra.html')
+          .then(response => {
+            if (!response.ok) {
+              throw new Error(`Error al cargar pasarela: ${response.status}`);
+            }
+            return response.text();
+          })
+          .then(html => {
+            document.getElementById('pasarelaCompraContainer').innerHTML = html;
+            console.log('Pasarela de compra cargada correctamente');
+            
+            configurarBotonCompra();
+          })
+          .catch(error => {
+            console.error('Error al cargar pasarela de compra:', error);
+            alert('Error al cargar la pasarela de compra. Por favor, recargue la página.');
+          });
+      });
+
+      // Función para configurar el botón de compra
+      function configurarBotonCompra() {
+        const btnComprar = document.getElementById('btnComprar718');
+        if (!btnComprar) {
+          console.error('No se encontró el botón de compra con ID: btnComprar718');
+          return;
+        }
+        
+        btnComprar.addEventListener('click', function() {
+          console.log('Botón de compra clickeado');
+          // Verificar si el usuario está autenticado
+          if (!verificarAutenticacion()) {
+            const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+            localStorage.setItem('redirect_after_login', currentPage);
+            
+            if (window.Swal) {
+              Swal.fire({
+                title: 'Iniciar sesión',
+                text: 'Debe iniciar sesión para realizar la compra',
+                icon: 'info',
+                confirmButtonText: 'Ir a iniciar sesión'
+              }).then(() => {
+                window.location.href = '/myporsche.html';
+              });
+            } else {
+              alert('Debe iniciar sesión para continuar');
+              window.location.href = '/myporsche.html';
+            }
+            return;
+          }
+          
+          // Iniciar proceso de compra
+          iniciarProcesoCompra(MODELO_718.id, MODELO_718.nombre, MODELO_718.precio);
+        });
+      }
+    </script>
   </body>
 </html>

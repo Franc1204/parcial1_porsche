@@ -66,7 +66,7 @@ body {
 
 .black-box {
   position: relative;
-  background-color: #F8F9FA;
+  background-color: black;
   width: 100vw;
   margin-left: calc(-50vw + 50%);
   overflow: visible;
@@ -82,7 +82,7 @@ body {
   margin-left: 22rem;
   padding: 0 1rem;
   text-align: left;
-  color: #000 !important;
+  color: white;
 }
 
 .overlap-img-behind {
@@ -134,12 +134,12 @@ body {
 }
 
 .lower-image {
-  margin-top: 250px;
+  margin-top: 50px;
   border-radius: 5%;
 }
 
 .upper-image {
-  margin-top: 150px;
+  margin-top: 50px;
   border-radius: 5%;
 }
 
@@ -175,9 +175,11 @@ body {
 
   .overlap-img-behind,
   .overlap-img {
-    top: -30px;
-    right: 20px;
-    width: 250px;
+    position: static;
+    display: block;
+    margin: 1rem auto;
+    width: 80%;
+    max-width: 300px;
   }
 }
 
@@ -188,23 +190,48 @@ body {
 }
 
 .carousel .card-img-top {
-  height: 800px;
+  height: 400px;
   width: 100%;
   object-fit: cover;
-  object-position: center top;
+  object-position: center center;
   background-color: transparent;
 }
 
 .carousel .card .card-body {
-  position: absolute;
+  position: relative;
   bottom: 0;
   left: 0;
   right: 0;
   width: 100%;
   padding: 1rem;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
-  color: #fff;
+  background-color: white;
+  color: #333;
   margin: 0;
+}
+
+@media (min-width: 769px) and (max-width: 1200px) {
+  .video-container .overlay-img {
+    height: 200px;
+  }
+
+  .video-container .overlay-font {
+    top: calc(100% - 220px);
+    height: 250px;
+  }
+
+  .black-box-content {
+    margin-left: 15rem;
+  }
+
+  .overlap-img-behind {
+    left: 500px;
+    width: 500px;
+  }
+
+  .overlap-img {
+    right: 200px;
+    width: 400px;
+  }
 }
 
 #header {
@@ -229,18 +256,44 @@ body {
   transform: translate(-50%, -50%);
 }
 
-#header .offcanvas-body a{
-    color:#333;
-    font-weight:bold;
-    font-size: 2rem;
-    padding: 2rem;
-    text-decoration:none;
+#header .offcanvas-backdrop.show {
+  background-color: rgba(0, 0, 0, 0.5) !important;
+  backdrop-filter: blur(70px);
+}
+
+#header .offcanvas-custom {
+  background: #fff;
+  backdrop-filter: blur(15px);
+}
+
+#header .offcanvas-body a {
+  color: #333;
+  font-weight: bold;
+  font-size: 2rem;
+  padding: 1rem;
+  text-decoration: none;
 }
 
 #header .menu-options li {
-    margin-bottom: 1.5rem;
+  margin-bottom: 1.5rem;
 }
 
-#header .menu-options li a {
-    font-size: 1.5rem;
+custom-video-player {
+  display: block;
+  width: 100%;
+  margin: 2rem 0;
+}
+
+custom-video-player video {
+  width: 100%;
+  border-radius: 8px;
+}
+
+custom-video-player .controls {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 5px;
+  padding: 5px;
 }

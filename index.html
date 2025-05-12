@@ -6,6 +6,118 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="/css/styles.css" rel="stylesheet">
   <link rel="shortcut icon" href="/assets/Porsche-logo.png" type="image/x-icon">
+  <style>
+    .models-section,
+    .images-section {
+      transition: background-color 0.8s ease;
+      padding: 60px 0;
+    }
+    
+    .models-section.dark-bg,
+    .images-section.dark-bg {
+      background-color: #000;
+    }
+    
+    .image-card {
+      position: relative;
+      border-radius: 10px;
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      margin-bottom: 20px;
+      border: none;
+    }
+    
+    .image-card img {
+      width: 100%;
+      transition: opacity 0.8s ease;
+      border-radius: 10px;
+      border: none;
+    }
+    
+    .image-text {
+      position: absolute;
+      bottom: 15px;
+      left: 15px;
+      color: white;
+      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+      transition: color 0.8s ease;
+    }
+    
+    .images-section.dark-bg .image-card {
+      box-shadow: none;
+    }
+    
+    .images-section.dark-bg .image-card img {
+      opacity: 0.85;
+      filter: brightness(0.9) contrast(1.1);
+      border: none;
+    }
+    
+    .image-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+    
+    .images-section.dark-bg .image-card:hover {
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+      border: none;
+    }
+    
+    .image-card:hover img {
+      filter: brightness(1.05);
+    }
+    
+    .car-card {
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .car-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+    }
+    
+    .car-card-background {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+      background-position: center;
+      transition: opacity 0.5s ease;
+    }
+    
+    .car-card-video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+    
+    .car-card:hover .car-card-background {
+      opacity: 0;
+    }
+    
+    .car-card:hover .car-card-video {
+      opacity: 1;
+    }
+    
+    .car-card-content {
+      position: relative;
+      z-index: 2;
+    }
+    
+    .car-card:hover .car-card-bottom {
+      background-color: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(5px);
+    }
+  </style>
 </head>
 <body>
   <header id="header">
@@ -22,7 +134,8 @@
     
     <div class="offcanvas offcanvas-start offcanvas-custom" tabindex="-1" id="offcanvasMenu" aria-labelledby="offcanvasMenuLabel">
       <div class="offcanvas-header border-bottom border-white">
-        <h5 class="offcanvas-title" id="offcanvasMenuLabel"></h5>
+        <div class="offcanvas-title" id="offcanvasMenuLabel">
+        </div>
         <button type="button" class="btn-close btn-close-white text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
       </div>
       <div class="offcanvas-body">
@@ -78,6 +191,9 @@
           <a href="718.html" class="car-card-link" style="text-decoration: none; color: inherit;">
             <div class="car-card">
               <div class="car-card-background" style="background-image: url('assets/5.png');"></div>
+              <video class="car-card-video" muted playsinline>
+                <source src="assets/718/718-2.mp4" type="video/mp4">
+              </video>
               <div class="badge-718">
                 <img src="/assets/718/718.png" alt="718">
               </div>
@@ -101,6 +217,9 @@
           <a href="911.html" class="car-card-link" style="text-decoration: none; color: inherit;">
             <div class="car-card">
               <div class="car-card-background" style="background-image: url('assets/6.png');"></div>
+              <video class="car-card-video" muted playsinline>
+                <source src="assets/911/video1.mp4" type="video/mp4">
+              </video>
               <div class="badge-911">
                 <img src="/assets/911/911.png" alt="911">
               </div>
@@ -124,6 +243,9 @@
           <a href="taycan.html" class="car-card-link" style="text-decoration: none; color: inherit;">
             <div class="car-card">
               <div class="car-card-background" style="background-image: url('assets/7.png');"></div>
+              <video class="car-card-video" muted playsinline>
+                <source src="assets/taycan/taycan-trailer.mp4" type="video/mp4">
+              </video>
               <div class="badge-taycan">
                 <img src="/assets/taycan/taycan.png" alt="Taycan">
               </div>
@@ -147,6 +269,9 @@
           <a href="panamera.html" class="car-card-link" style="text-decoration: none; color: inherit;">
             <div class="car-card">
               <div class="car-card-background" style="background-image: url('assets/8.png');"></div>
+              <video class="car-card-video" muted playsinline>
+                <source src="assets/panamera/panamera1.mp4" type="video/mp4">
+              </video>
               <div class="badge-panamera">
                 <img src="/assets/panamera/panamera.png" alt="Panamera">
               </div>
@@ -170,6 +295,9 @@
           <a href="macan.html" class="car-card-link" style="text-decoration: none; color: inherit;">
             <div class="car-card">
               <div class="car-card-background" style="background-image: url('assets/9.png');"></div>
+              <video class="car-card-video" muted playsinline>
+                <source src="assets/macan/macanhero.mp4" type="video/mp4">
+              </video>
               <div class="badge-macan">
                 <img src="/assets/macan/macan.png" alt="Macan">
               </div>
@@ -193,6 +321,9 @@
           <a href="cayenne.html" class="car-card-link" style="text-decoration: none; color: inherit;">
             <div class="car-card">
               <div class="car-card-background" style="background-image: url('assets/10.png');"></div>
+              <video class="car-card-video" muted playsinline>
+                <source src="assets/home.mp4" type="video/mp4">
+              </video>
               <div class="badge-cayenne">
                 <img src="/assets/cayenne/cayenne.png" alt="Cayenne">
               </div>
@@ -235,5 +366,67 @@
   </div>
   
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="components/utils.js"></script>
+  <script src="components/auth.js"></script>
+  
+  <script>
+    // Función para cambiar el fondo a negro al desplazarse a la sección de modelos
+    document.addEventListener('DOMContentLoaded', function() {
+      const modelsSection = document.getElementById('models');
+      const imagesSection = document.getElementById('images');
+      
+      function isInViewport(element) {
+        const rect = element.getBoundingClientRect();
+        return (
+          rect.top <= (window.innerHeight || document.documentElement.clientHeight) / 1.5 &&
+          rect.bottom >= 0
+        );
+      }
+      
+      let darkBgActive = false;
+      
+      // Función para manejar el evento de scroll
+      function handleScroll() {
+        const isVisible = isInViewport(imagesSection) || isInViewport(modelsSection);
+        
+        // Activar/desactivar fondo oscuro para ambas secciones simultáneamente
+        if (isVisible !== darkBgActive) {
+          darkBgActive = isVisible;
+          
+          if (darkBgActive) {
+            imagesSection.classList.add('dark-bg');
+            modelsSection.classList.add('dark-bg');
+          } else {
+            imagesSection.classList.remove('dark-bg');
+            modelsSection.classList.remove('dark-bg');
+          }
+        }
+      }
+      
+      window.addEventListener('scroll', handleScroll);
+      
+      handleScroll();
+      
+      // Manejar hover en tarjetas de coches para reproducir videos
+      const carCards = document.querySelectorAll('.car-card');
+      
+      carCards.forEach(card => {
+        const video = card.querySelector('video');
+        
+        card.addEventListener('mouseenter', function() {
+          if (video && video.paused) {
+            video.currentTime = 0;
+            video.play();
+          }
+        });
+        
+        card.addEventListener('mouseleave', function() {
+          if (video && !video.paused) {
+            video.pause();
+          }
+        });
+      });
+    });
+  </script>
 </body>
 </html>
