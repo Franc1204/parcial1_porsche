@@ -1,4 +1,4 @@
-// Funciones compartidas para la autenticación y mostrar información del usuario
+import config from './config.js';
 
 /**
  * Verifica si el usuario está autenticado mediante token JWT
@@ -11,7 +11,7 @@ async function verificarAutenticacion() {
   }
   
   try {
-    const res = await fetch('http://localhost:3000/api/usuarios/perfil', {
+    const res = await fetch(config.getApiUrl('/api/usuarios/perfil'), {
       headers: {
         'Authorization': 'Bearer ' + token
       }
@@ -42,7 +42,6 @@ async function actualizarMenu() {
   
   if (!menuHeader || !menuBody) return;
   
-  // Actualizar cabecera
   const titleContainer = menuHeader.querySelector('#offcanvasMenuLabel') || document.createElement('div');
   titleContainer.id = 'offcanvasMenuLabel';
   titleContainer.className = 'offcanvas-title';
@@ -55,7 +54,6 @@ async function actualizarMenu() {
     const authItems = menuBody.querySelectorAll('.auth-item');
     authItems.forEach(item => item.remove());
     
-    // Modificar el enlace My Porsche para que redirija a perfil.html cuando hay sesión
     const myPorscheLinks = menuBody.querySelectorAll('a');
     myPorscheLinks.forEach(link => {
       if (link.textContent.trim() === 'My Porsche' || link.href.includes('myporsche.html')) {
@@ -79,7 +77,7 @@ async function actualizarMenu() {
     myPorscheLinks.forEach(link => {
       if (link.textContent.includes('My Porsche') || link.href.includes('perfil.html')) {
         link.href = "myporsche.html";
-        link.innerHTML = 'My Porsche'; // Restaurar texto original
+        link.innerHTML = 'My Porsche'; 
         console.log("Link restaurado a myporsche.html", link);
       }
     });
@@ -111,8 +109,6 @@ function cerrarSesion(e) {
 async function protegerRuta(requireAuth = true) {
   try {
     const usuario = await verificarAutenticacion();
-    
-    
     return usuario;
   } catch (error) {
     console.error("Error en protegerRuta:", error);
@@ -120,4 +116,14 @@ async function protegerRuta(requireAuth = true) {
   }
 }
 
-document.addEventListener('DOMContentLoaded', actualizarMenu); 
+// Ejecutar actualizarMenu cuando el DOM esté cargado
+document.addEventListener('DOMContentLoaded', actualizarMenu);
+
+// Exponer funciones al ámbito global para que sean accesibles desde los scripts no-módulo
+window.verificarAutenticacion = verificarAutenticacion;
+window.actualizarMenu = actualizarMenu;
+window.cerrarSesion = cerrarSesion;
+window.protegerRuta = protegerRuta;
+
+// También exportamos las funciones para uso como módulo ES
+export { verificarAutenticacion, actualizarMenu, cerrarSesion, protegerRuta }; 

@@ -166,40 +166,48 @@
   <div id="pasarelaCompraContainer"></div>
   
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.32/dist/sweetalert2.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.32/dist/sweetalert2.all.min.js"></script>
   <script src="/components/custom-video-player.js"></script>
   <script src="/components/utils.js"></script>
-  <script src="/components/compra.js"></script>
-  <script src="/components/auth.js"></script>
-  <script>
-    // Configuración del modelo
+  <script type="module" src="/components/auth.js"></script>
+  <script type="module">
+    import { iniciarProcesoCompra, procesarCompra } from '/components/compra.js';
+    
     const MODELO_PANAMERA = {
       id: "panamera",
       nombre: "Panamera 4 E-Hybrid",
       precio: 2548000
     };
     
-    // Cargar el componente de pasarela de compra
     document.addEventListener('DOMContentLoaded', function() {
+      // Configuración de carrusel
+      const carouselItems = document.querySelectorAll('.carousel-item');
+      if (carouselItems.length > 0) {
+        carouselItems[0].classList.add('active');
+      }
+      
+      // Cargar pasarela de compra
       fetch('/components/pasarela-compra.html')
         .then(response => {
-          if (!response.ok) {
-            throw new Error(`Error al cargar pasarela: ${response.status}`);
-          }
+          if (!response.ok) throw new Error(`Error al cargar pasarela: ${response.status}`);
           return response.text();
         })
         .then(html => {
           document.getElementById('pasarelaCompraContainer').innerHTML = html;
           console.log('Pasarela de compra cargada correctamente');
-          
           configurarBotonCompra();
+          // Configurar botón de completar compra
+          const botonComprar = document.getElementById('botonComprar');
+          if (botonComprar) {
+            botonComprar.addEventListener('click', procesarCompra);
+          }
         })
         .catch(error => {
           console.error('Error al cargar pasarela de compra:', error);
           alert('Error al cargar la pasarela de compra. Por favor, recargue la página.');
         });
     });
-
+    
     function configurarBotonCompra() {
       const btnComprar = document.querySelector('.text-container .btn-dark.btn-lg');
       if (!btnComprar) {

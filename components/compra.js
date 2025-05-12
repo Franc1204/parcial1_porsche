@@ -1,5 +1,5 @@
 // Lógica para la pasarela de compra
-
+import config from './config.js';
 
 let modeloSeleccionado = null;
 let inventarioDisponible = null;
@@ -99,7 +99,7 @@ async function verificarInventario(modeloId) {
     
     console.log(`Verificando inventario para modelo: ${modeloId}`);
     
-    const url = `http://localhost:3000/api/inventario?modelo=${modeloId}`;
+    const url = config.getApiUrl(`/api/inventario?modelo=${modeloId}`);
     console.log('Consultando inventario en:', url);
     
     const response = await fetch(url, {
@@ -182,7 +182,7 @@ async function crearInventario(modeloId, token) {
   try {
     console.log(`Intentando crear inventario para modelo: ${modeloId}`);
     
-    const response = await fetch('http://localhost:3000/api/inventario', {
+    const response = await fetch(config.getApiUrl('/api/inventario'), {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -227,7 +227,7 @@ async function cargarTarjetasUsuario() {
       throw new Error('Usuario no autenticado');
     }
     
-    const response = await fetch('http://localhost:3000/api/usuarios/perfil', {
+    const response = await fetch(config.getApiUrl('/api/usuarios/perfil'), {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -304,7 +304,7 @@ async function cargarDireccionUsuario() {
       throw new Error('Usuario no autenticado');
     }
     
-    const response = await fetch('http://localhost:3000/api/usuarios/perfil', {
+    const response = await fetch(config.getApiUrl('/api/usuarios/perfil'), {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -475,7 +475,7 @@ async function procesarCompra() {
     });
     
     // Enviar solicitud al backend
-    const response = await fetch('http://localhost:3000/api/pedidos', {
+    const response = await fetch(config.getApiUrl('/api/pedidos'), {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -530,5 +530,4 @@ async function procesarCompra() {
   }
 }
 
-window.iniciarProcesoCompra = iniciarProcesoCompra;
-window.procesarCompra = procesarCompra; 
+export { iniciarProcesoCompra, procesarCompra }; 

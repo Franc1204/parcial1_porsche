@@ -547,8 +547,10 @@
   </div>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script src="components/utils.js"></script>
-  <script src="components/auth.js"></script>
-  <script>
+  <script type="module" src="components/auth.js"></script>
+  <script type="module">
+  import config from './components/config.js';
+  
   async function cargarPerfil() {
     try {
       // Verificar si el usuario está autenticado
@@ -559,7 +561,7 @@
         return;
       }
       
-      const response = await fetch('http://localhost:3000/api/usuarios/perfil', {
+      const response = await fetch(config.getApiUrl('/api/usuarios/perfil'), {
         headers: {
           'Authorization': 'Bearer ' + token
         }
@@ -869,7 +871,7 @@
     
     try {
       console.log("Enviando solicitud PUT a /api/usuarios/editar");
-      const res = await fetch('http://localhost:3000/api/usuarios/editar', {
+      const res = await fetch(config.getApiUrl('/api/usuarios/editar'), {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -953,7 +955,7 @@
         throw new Error('No hay token disponible');
       }
       
-      const response = await fetch('http://localhost:3000/api/pedidos', {
+      const response = await fetch(config.getApiUrl('/api/pedidos'), {
         headers: {
           'Authorization': 'Bearer ' + token
         }
@@ -1086,7 +1088,7 @@
       alert('Procesando devolución, por favor espere...');
       
       const token = localStorage.getItem('token');
-      const response = await fetch(`http://localhost:3000/api/pedidos/${pedidoId}/devolucion`, {
+      const response = await fetch(config.getApiUrl(`/api/pedidos/${pedidoId}/devolucion`), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

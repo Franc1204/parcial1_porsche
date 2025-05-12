@@ -116,8 +116,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.32/dist/sweetalert2.all.min.js"></script>
     <script src="/components/utils.js"></script>
-    <script src="/components/compra.js"></script>
-    <script src="/components/auth.js"></script>
+    <script type="module" src="/components/auth.js"></script>
     <script>
       window.addEventListener("scroll", function () {
         document.querySelectorAll(".video-section, .image-section").forEach(function (section) {
@@ -133,7 +132,10 @@
           }
         });
       });
-
+    </script>
+    <script type="module">
+      import { iniciarProcesoCompra, procesarCompra } from '/components/compra.js';
+      
       const MODELO_911 = {
         id: "911",
         nombre: "911 Carrera GTS",
@@ -154,6 +156,11 @@
             console.log('Pasarela de compra cargada correctamente');
             
             configurarBotonCompra();
+            // Configurar botón de completar compra
+            const botonComprar = document.getElementById('botonComprar');
+            if (botonComprar) {
+              botonComprar.addEventListener('click', procesarCompra);
+            }
           })
           .catch(error => {
             console.error('Error al cargar pasarela de compra:', error);
